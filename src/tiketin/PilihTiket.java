@@ -4,6 +4,14 @@
  */
 package tiketin;
 
+import java.awt.Color;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
+
 /**
  *
  * @author 62813
@@ -15,6 +23,70 @@ public class PilihTiket extends javax.swing.JFrame {
      */
     public PilihTiket() {
         initComponents();
+        setTanggalan();
+        setSelectWarna();
+    }
+    private boolean filmTidakBerlangsung = false;
+     public void setTanggalan(){
+      JToggleButton[] allJ = {jToggleButton1,jToggleButton2,jToggleButton3,jToggleButton4,jToggleButton5,jToggleButton6};   
+      LocalDate today = LocalDate.now();
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+       
+        for(int i = 0; i < allJ.length; i++){
+	  LocalDate hh = today.plusDays(i);	
+          String hari = hh.format(formatter);
+	  allJ[i].setText(hari);
+      }
+    }
+     
+     private boolean boleh = false;
+ 
+    public void setJam(java.awt.event.ActionEvent evt){
+        
+        JToggleButton[] allJ = {jToggleButton1,jToggleButton2,jToggleButton3,jToggleButton4,jToggleButton5,jToggleButton6
+         ,jam,jam2,jam4,jam5,jam6,jam7,jam8,jam9,jam10,jam11
+        }; 
+        
+
+            setSelectWarna();
+            JToggleButton jam = (JToggleButton) evt.getSource();            
+            LocalTime jamMulai = LocalTime.parse(jam.getText());
+            Duration selisih = Duration.between(jamMulai, LocalTime.now());
+            long toJam = selisih.toHours();
+            long toMenit = selisih.toMinutesPart();
+            pilihBangku bangku = new pilihBangku();
+            System.out.println(toJam);
+            System.out.println(toMenit);
+            System.out.println(jam.getText());
+
+            if(toJam <= 0 && toMenit <= 0 || !jToggleButton1.isSelected()){
+                  boleh = true;
+            }else if (toJam >= 0 && toMenit >= 0 && jToggleButton1.isSelected()) {
+                 JOptionPane.showMessageDialog(null, "Maaf Film Sedang Berlangsung :(", "Film berlangsung mulai", JOptionPane.YES_OPTION);
+                  boleh = false;  
+            }
+        
+       
+    } 
+    
+    public void setSelectWarna(){
+        JToggleButton[] allJ = {jToggleButton1,jToggleButton2,jToggleButton3,jToggleButton4,jToggleButton5,jToggleButton6
+         ,jam,jam2,jam4,jam5,jam6,jam7,jam8,jam9,jam10,jam11
+        }; 
+        
+            
+
+        for(int i = 0; i < allJ.length; i++){
+          if(allJ[i].isSelected()){
+            allJ[i].setBackground(Color.green);
+          }else{
+            allJ[i].setBackground(Color.white);
+          }
+        }
+    }
+    
+    public void setResetAutoDate(){
+        
     }
 
     /**
@@ -41,18 +113,18 @@ public class PilihTiket extends javax.swing.JFrame {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jPanel2 = new javax.swing.JPanel();
         namaBioskop1 = new javax.swing.JLabel();
-        jToggleButton37 = new javax.swing.JToggleButton();
-        jToggleButton38 = new javax.swing.JToggleButton();
-        jToggleButton39 = new javax.swing.JToggleButton();
-        jToggleButton40 = new javax.swing.JToggleButton();
-        jToggleButton41 = new javax.swing.JToggleButton();
+        jam = new javax.swing.JToggleButton();
+        jam2 = new javax.swing.JToggleButton();
+        jam4 = new javax.swing.JToggleButton();
+        jam5 = new javax.swing.JToggleButton();
+        jam6 = new javax.swing.JToggleButton();
         jPanel3 = new javax.swing.JPanel();
         namaBioskop2 = new javax.swing.JLabel();
-        jToggleButton42 = new javax.swing.JToggleButton();
-        jToggleButton43 = new javax.swing.JToggleButton();
-        jToggleButton44 = new javax.swing.JToggleButton();
-        jToggleButton45 = new javax.swing.JToggleButton();
-        jToggleButton46 = new javax.swing.JToggleButton();
+        jam7 = new javax.swing.JToggleButton();
+        jam8 = new javax.swing.JToggleButton();
+        jam9 = new javax.swing.JToggleButton();
+        jam10 = new javax.swing.JToggleButton();
+        jam11 = new javax.swing.JToggleButton();
         jButton1 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
 
@@ -71,7 +143,6 @@ public class PilihTiket extends javax.swing.JFrame {
         rincianFilm.setText("2018  Laga/Fiksi ilmiah durasi 2 j 29 m");
 
         pilihHari.add(jToggleButton1);
-        jToggleButton1.setText("Senin, 29 Mei 2023");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton1ActionPerformed(evt);
@@ -79,38 +150,83 @@ public class PilihTiket extends javax.swing.JFrame {
         });
 
         pilihHari.add(jToggleButton2);
-        jToggleButton2.setText("Selasa, 30 Mei 2023");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
 
         pilihHari.add(jToggleButton3);
-        jToggleButton3.setText("Rabu, 31 Mei 2023");
+        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton3ActionPerformed(evt);
+            }
+        });
 
         pilihHari.add(jToggleButton4);
-        jToggleButton4.setText("Kamis, 1 April 2023");
+        jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton4ActionPerformed(evt);
+            }
+        });
 
         pilihHari.add(jToggleButton5);
-        jToggleButton5.setText("Jumat, 2 April 2023");
+        jToggleButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton5ActionPerformed(evt);
+            }
+        });
 
         pilihHari.add(jToggleButton6);
-        jToggleButton6.setText("Sabtu, 3 April 2023");
+        jToggleButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton6ActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         namaBioskop1.setText("AEON MALL JGC CGV - Studio 2");
 
-        pilihJamBioskop.add(jToggleButton37);
-        jToggleButton37.setText("12:15");
+        pilihJamBioskop.add(jam);
+        jam.setText("12:15");
+        jam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jamActionPerformed(evt);
+            }
+        });
 
-        pilihJamBioskop.add(jToggleButton38);
-        jToggleButton38.setText("15:10");
+        pilihJamBioskop.add(jam2);
+        jam2.setText("15:10");
+        jam2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jam2ActionPerformed(evt);
+            }
+        });
 
-        pilihJamBioskop.add(jToggleButton39);
-        jToggleButton39.setText("17:15");
+        pilihJamBioskop.add(jam4);
+        jam4.setText("17:15");
+        jam4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jam4ActionPerformed(evt);
+            }
+        });
 
-        pilihJamBioskop.add(jToggleButton40);
-        jToggleButton40.setText("14:10");
+        pilihJamBioskop.add(jam5);
+        jam5.setText("14:10");
+        jam5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jam5ActionPerformed(evt);
+            }
+        });
 
-        pilihJamBioskop.add(jToggleButton41);
-        jToggleButton41.setText("16:10");
+        pilihJamBioskop.add(jam6);
+        jam6.setText("16:10");
+        jam6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jam6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -121,17 +237,17 @@ public class PilihTiket extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(namaBioskop1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(64, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jToggleButton37, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButton40, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jam, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jam5, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jToggleButton38, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButton41, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jam2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jam6, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(35, 35, 35)
-                        .addComponent(jToggleButton39, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jam4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -141,16 +257,16 @@ public class PilihTiket extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jToggleButton37)
+                        .addComponent(jam)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jToggleButton40))
+                        .addComponent(jam5))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jToggleButton38)
+                        .addComponent(jam2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jToggleButton41))
+                        .addComponent(jam6))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
-                        .addComponent(jToggleButton39)))
+                        .addComponent(jam4)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -158,25 +274,45 @@ public class PilihTiket extends javax.swing.JFrame {
 
         namaBioskop2.setText("Transmart XXI -  Studio 3");
 
-        pilihJamBioskop.add(jToggleButton42);
-        jToggleButton42.setText("12:00");
-        jToggleButton42.addActionListener(new java.awt.event.ActionListener() {
+        pilihJamBioskop.add(jam7);
+        jam7.setText("12:00");
+        jam7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton42ActionPerformed(evt);
+                jam7ActionPerformed(evt);
             }
         });
 
-        pilihJamBioskop.add(jToggleButton43);
-        jToggleButton43.setText("16:00");
+        pilihJamBioskop.add(jam8);
+        jam8.setText("16:00");
+        jam8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jam8ActionPerformed(evt);
+            }
+        });
 
-        pilihJamBioskop.add(jToggleButton44);
-        jToggleButton44.setText("20:00");
+        pilihJamBioskop.add(jam9);
+        jam9.setText("20:00");
+        jam9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jam9ActionPerformed(evt);
+            }
+        });
 
-        pilihJamBioskop.add(jToggleButton45);
-        jToggleButton45.setText("14:00");
+        pilihJamBioskop.add(jam10);
+        jam10.setText("14:00");
+        jam10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jam10ActionPerformed(evt);
+            }
+        });
 
-        pilihJamBioskop.add(jToggleButton46);
-        jToggleButton46.setText("18:00");
+        pilihJamBioskop.add(jam11);
+        jam11.setText("18:00");
+        jam11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jam11ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -187,19 +323,19 @@ public class PilihTiket extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(namaBioskop2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(62, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jToggleButton45, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jToggleButton46, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jam10, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                                .addComponent(jam11, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jToggleButton42, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jam7, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jToggleButton43, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jam8, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(41, 41, 41)
-                        .addComponent(jToggleButton44, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jam9, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -210,15 +346,15 @@ public class PilihTiket extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jToggleButton42)
-                            .addComponent(jToggleButton43))
+                            .addComponent(jam7)
+                            .addComponent(jam8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jToggleButton46)
-                            .addComponent(jToggleButton45)))
+                            .addComponent(jam11)
+                            .addComponent(jam10)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jToggleButton44)))
+                        .addComponent(jam9)))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -273,26 +409,24 @@ public class PilihTiket extends javax.swing.JFrame {
                                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(68, 68, 68)
                                     .addComponent(avangers))))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gambar_1Layout.createSequentialGroup()
-                            .addGap(32, 32, 32)
-                            .addGroup(gambar_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(gambar_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(38, 38, 38)
-                            .addGroup(gambar_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jToggleButton4)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gambar_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(gambar_1Layout.createSequentialGroup()
+                                .addGroup(gambar_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(41, 41, 41)
                                 .addGroup(gambar_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jToggleButton6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jToggleButton5, javax.swing.GroupLayout.Alignment.LEADING)))))
+                                    .addComponent(jToggleButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                                    .addComponent(jToggleButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jToggleButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(gambar_1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(gambar_1Layout.createSequentialGroup()
                         .addGap(138, 138, 138)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         gambar_1Layout.setVerticalGroup(
             gambar_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,38 +447,33 @@ public class PilihTiket extends javax.swing.JFrame {
                     .addGroup(gambar_1Layout.createSequentialGroup()
                         .addComponent(jToggleButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(gambar_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jToggleButton5)
-                            .addGroup(gambar_1Layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addComponent(jToggleButton6))))
+                        .addComponent(jToggleButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jToggleButton6))
                     .addGroup(gambar_1Layout.createSequentialGroup()
                         .addComponent(jToggleButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jToggleButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jToggleButton3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(28, 28, 28)
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(gambar_1, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(gambar_1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 12, Short.MAX_VALUE)
-                .addComponent(gambar_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(gambar_1, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -352,12 +481,12 @@ public class PilihTiket extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
+      setSelectWarna();
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
-    private void jToggleButton42ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton42ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton42ActionPerformed
+    private void jam7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jam7ActionPerformed
+        setJam(evt);
+    }//GEN-LAST:event_jam7ActionPerformed
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         // TODO add your handling code here:
@@ -367,10 +496,70 @@ public class PilihTiket extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel9MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        pilihBangku bangku = new pilihBangku();
-        bangku.setVisible(true);
+        JToggleButton[] allJ = {jToggleButton1,jToggleButton2,jToggleButton3,jToggleButton4,jToggleButton5,jToggleButton6
+         ,jam,jam2,jam4,jam5,jam6,jam7,jam8,jam9,jam10,jam11
+        };
+        if(evt.getSource() == jButton1 && boleh){ 
+                pilihBangku pilih = new pilihBangku();
+                pilih.setVisible(true);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
+        setSelectWarna();
+    }//GEN-LAST:event_jToggleButton4ActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+       setSelectWarna();
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
+         setSelectWarna();
+    }//GEN-LAST:event_jToggleButton5ActionPerformed
+
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+       setSelectWarna();
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jToggleButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton6ActionPerformed
+         setSelectWarna();
+    }//GEN-LAST:event_jToggleButton6ActionPerformed
+
+    private void jamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jamActionPerformed
+       setJam(evt);
+    }//GEN-LAST:event_jamActionPerformed
+
+    private void jam2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jam2ActionPerformed
+        setJam(evt);
+    }//GEN-LAST:event_jam2ActionPerformed
+
+    private void jam4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jam4ActionPerformed
+        setJam(evt);
+    }//GEN-LAST:event_jam4ActionPerformed
+
+    private void jam5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jam5ActionPerformed
+        setJam(evt);
+    }//GEN-LAST:event_jam5ActionPerformed
+
+    private void jam6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jam6ActionPerformed
+       setJam(evt);
+    }//GEN-LAST:event_jam6ActionPerformed
+
+    private void jam8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jam8ActionPerformed
+       setJam(evt);
+    }//GEN-LAST:event_jam8ActionPerformed
+
+    private void jam10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jam10ActionPerformed
+       setJam(evt);
+    }//GEN-LAST:event_jam10ActionPerformed
+
+    private void jam11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jam11ActionPerformed
+       setJam(evt);
+    }//GEN-LAST:event_jam11ActionPerformed
+
+    private void jam9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jam9ActionPerformed
+        setJam(evt);
+    }//GEN-LAST:event_jam9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -420,19 +609,19 @@ public class PilihTiket extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
-    private javax.swing.JToggleButton jToggleButton37;
-    private javax.swing.JToggleButton jToggleButton38;
-    private javax.swing.JToggleButton jToggleButton39;
     private javax.swing.JToggleButton jToggleButton4;
-    private javax.swing.JToggleButton jToggleButton40;
-    private javax.swing.JToggleButton jToggleButton41;
-    private javax.swing.JToggleButton jToggleButton42;
-    private javax.swing.JToggleButton jToggleButton43;
-    private javax.swing.JToggleButton jToggleButton44;
-    private javax.swing.JToggleButton jToggleButton45;
-    private javax.swing.JToggleButton jToggleButton46;
     private javax.swing.JToggleButton jToggleButton5;
     private javax.swing.JToggleButton jToggleButton6;
+    private javax.swing.JToggleButton jam;
+    private javax.swing.JToggleButton jam10;
+    private javax.swing.JToggleButton jam11;
+    private javax.swing.JToggleButton jam2;
+    private javax.swing.JToggleButton jam4;
+    private javax.swing.JToggleButton jam5;
+    private javax.swing.JToggleButton jam6;
+    private javax.swing.JToggleButton jam7;
+    private javax.swing.JToggleButton jam8;
+    private javax.swing.JToggleButton jam9;
     public static javax.swing.JLabel namaBioskop1;
     public static javax.swing.JLabel namaBioskop2;
     private javax.swing.ButtonGroup pilihHari;

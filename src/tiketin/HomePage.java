@@ -16,6 +16,8 @@ public class HomePage extends javax.swing.JFrame {
     public HomePage() {
         initComponents();
     }
+    
+    private codeC param = new codeC();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -197,8 +199,8 @@ public class HomePage extends javax.swing.JFrame {
        PilihTiket.rincianFilm.setText("2019 ‧ Laga/Fiksi ilmiah ‧ 3 j 1 m");
        if(jComboBox1.getSelectedIndex()==1){
               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
-           PilihTiket.namaBioskop1.setText("MAll Jakata 1");
-            PilihTiket.namaBioskop2.setText("MAll Jakata 2");
+           PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
+            PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
              pilih.setVisible(true);
              this.setVisible(false);
        }else if(jComboBox1.getSelectedIndex()==2){
@@ -226,7 +228,6 @@ public class HomePage extends javax.swing.JFrame {
              pilih.setVisible(true);
              this.setVisible(false);
         }
-       
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
@@ -239,8 +240,8 @@ public class HomePage extends javax.swing.JFrame {
         PilihTiket.rincianFilm.setText("2022  Horror  2 j 1 m");
          if(jComboBox1.getSelectedIndex()==1){
               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
-           PilihTiket.namaBioskop1.setText("MAll Jakata 1");
-            PilihTiket.namaBioskop2.setText("MAll Jakata 2");
+           PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
+            PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
              pilih.setVisible(true);
              this.setVisible(false);
        }else if(jComboBox1.getSelectedIndex()==2){
@@ -268,6 +269,8 @@ public class HomePage extends javax.swing.JFrame {
              pilih.setVisible(true);
              this.setVisible(false);
         }
+         
+
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
@@ -280,8 +283,8 @@ public class HomePage extends javax.swing.JFrame {
         PilihTiket.rincianFilm.setText("2022 ‧ Petualangan/Animasi ‧ 2 j 2 m");
         if(jComboBox1.getSelectedIndex()==1){
               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
-           PilihTiket.namaBioskop1.setText("MAll Jakata 1");
-            PilihTiket.namaBioskop2.setText("MAll Jakata 2");
+           PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
+            PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
              pilih.setVisible(true);
              this.setVisible(false);
        }else if(jComboBox1.getSelectedIndex()==2){
@@ -309,6 +312,7 @@ public class HomePage extends javax.swing.JFrame {
              pilih.setVisible(true);
              this.setVisible(false);
         }
+        
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
@@ -321,8 +325,8 @@ public class HomePage extends javax.swing.JFrame {
            PilihTiket.rincianFilm.setText("2023 ‧ Horor/Fantasi ‧ 1 j 36 m");
        if(jComboBox1.getSelectedIndex()==1){
               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/evil.jpg")));
-           PilihTiket.namaBioskop1.setText("MAll Jakata 1");
-            PilihTiket.namaBioskop2.setText("MAll Jakata 2");
+           PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
+            PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
              pilih.setVisible(true);
              this.setVisible(false);
        }else if(jComboBox1.getSelectedIndex()==2){
@@ -350,6 +354,7 @@ public class HomePage extends javax.swing.JFrame {
              pilih.setVisible(true);
              this.setVisible(false);
         }
+      
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
@@ -362,8 +367,8 @@ public class HomePage extends javax.swing.JFrame {
            PilihTiket.rincianFilm.setText("2023 ‧ Horor ‧ 1 j 43 m");
          if(jComboBox1.getSelectedIndex()==1){
               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/pope.jpg")));
-           PilihTiket.namaBioskop1.setText("MAll Jakata 1");
-            PilihTiket.namaBioskop2.setText("MAll Jakata 2");
+           PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
+            PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
              pilih.setVisible(true);
              this.setVisible(false);
        }else if(jComboBox1.getSelectedIndex()==2){
@@ -391,6 +396,7 @@ public class HomePage extends javax.swing.JFrame {
              pilih.setVisible(true);
              this.setVisible(false);
         }
+         
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
@@ -402,8 +408,8 @@ public class HomePage extends javax.swing.JFrame {
         PilihTiket.rincianFilm.setText("2016 ‧ Roman/Drama ‧ 2 j 9 m");
         if(jComboBox1.getSelectedIndex()==1){
               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
-           PilihTiket.namaBioskop1.setText("MAll Jakata 1");
-            PilihTiket.namaBioskop2.setText("MAll Jakata 2");
+           PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
+            PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
              pilih.setVisible(true);
              this.setVisible(false);
        }else if(jComboBox1.getSelectedIndex()==2){
@@ -431,6 +437,7 @@ public class HomePage extends javax.swing.JFrame {
              pilih.setVisible(true);
              this.setVisible(false);
         }
+        
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
