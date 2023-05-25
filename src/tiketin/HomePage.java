@@ -3,18 +3,43 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package tiketin;
-
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 /**
  *
  * @author 62813
  */
 public class HomePage extends javax.swing.JFrame {
+        public Connection con; 
+    public Statement stm;
+    public PreparedStatement pst;
+    public ResultSet rs = null;
+    
+    
+     public void Koneksi(){
+            try {
+               String url = "jdbc:mysql://localhost:3306/tiketin";
+               String user = "root";
+               String pass = "";
+               Class.forName("com.mysql.cj.jdbc.Driver");
+               con= DriverManager.getConnection(url, user, pass);
+               stm = con.createStatement();
+            }       catch (ClassNotFoundException | SQLException e){
+                }
+        }
 
     /**
      * Creates new form HomePage
      */
     public HomePage() {
         initComponents();
+        Koneksi();
     }
     
     private codeC param = new codeC();
@@ -30,7 +55,7 @@ public class HomePage extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        lokasi1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -46,7 +71,7 @@ public class HomePage extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
         jPanel1.setPreferredSize(new java.awt.Dimension(510, 680));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -58,13 +83,13 @@ public class HomePage extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 50));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Lokasi", "Jakarta", "Bekasi", "Depok", "Bogor", "Tanggerang" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        lokasi1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Lokasi", "Jakarta", "Bekasi", "Depok", "Bogor", "Tanggerang" }));
+        lokasi1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                lokasi1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 12, 380, 40));
+        jPanel1.add(lokasi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 12, 380, 40));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Pilih Filim ");
@@ -123,7 +148,12 @@ public class HomePage extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/icons8_home_32px.png"))); // NOI18N
-        jLabel9.setText("Home");
+        jLabel9.setText("Exit");
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/icons8_news_26px_1.png"))); // NOI18N
         jLabel10.setText("Riwayat pesanan");
@@ -192,252 +222,265 @@ public class HomePage extends javax.swing.JFrame {
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
         //method untuk menentukan pilihan tiket sesuai gambar daan lokasi
-
-        PilihTiket pilih = new PilihTiket();
-       PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
-       PilihTiket.KKN.setText("Avengers: Endgame");
-       PilihTiket.rincianFilm.setText("2019 ‧ Laga/Fiksi ilmiah ‧ 3 j 1 m");
-       if(jComboBox1.getSelectedIndex()==1){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
-           PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
-            PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-       }else if(jComboBox1.getSelectedIndex()==2){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
-             PilihTiket.namaBioskop1.setText("MAll bekasi 1");
-            PilihTiket.namaBioskop2.setText("MAll bekasi2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-       }else if(jComboBox1.getSelectedIndex()==3){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
-             PilihTiket.namaBioskop1.setText("MAll depok 1");
-            PilihTiket.namaBioskop2.setText("MAll depok 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }else if(jComboBox1.getSelectedIndex()==4){
+   if(lokasi1.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(null, "anda belum memilih lokasi", "Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+                PilihTiket pilih = new PilihTiket();
                PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
-             PilihTiket.namaBioskop1.setText("MAll bogor 1");
-            PilihTiket.namaBioskop2.setText("MAll bogor 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }else if(jComboBox1.getSelectedIndex()==5){
-               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
-             PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
-            PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }
+               PilihTiket.KKN.setText("Avengers: Endgame");
+               PilihTiket.rincianFilm.setText("2019 ‧ Laga/Fiksi ilmiah ‧ 3 j 1 m");
+               if(lokasi1.getSelectedIndex()==1){
+                      PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
+                   PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
+                    PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
+                     pilih.setVisible(true);
+                     this.setVisible(false);
+               }else if(lokasi1.getSelectedIndex()==2){
+                      PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
+                     PilihTiket.namaBioskop1.setText("MAll bekasi 1");
+                    PilihTiket.namaBioskop2.setText("MAll bekasi2");
+                     pilih.setVisible(true);
+                     this.setVisible(false);
+               }else if(lokasi1.getSelectedIndex()==3){
+                      PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
+                     PilihTiket.namaBioskop1.setText("MAll depok 1");
+                    PilihTiket.namaBioskop2.setText("MAll depok 2");
+                     pilih.setVisible(true);
+                     this.setVisible(false);
+                }else if(lokasi1.getSelectedIndex()==4){
+                       PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
+                     PilihTiket.namaBioskop1.setText("MAll bogor 1");
+                    PilihTiket.namaBioskop2.setText("MAll bogor 2");
+                     pilih.setVisible(true);
+                     this.setVisible(false);
+                }else if(lokasi1.getSelectedIndex()==5){
+                       PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
+                     PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
+                    PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
+                     pilih.setVisible(true);
+                     this.setVisible(false);
+                }
+         }
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
         //ethod untuk menentukan pilihan tiket sesuai gambar daan lokasi
-        
-        PilihTiket pilih = new PilihTiket();
-       PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
-       PilihTiket.KKN.setText("KKN di Desa Penari");
-        PilihTiket.rincianFilm.setText("2022  Horror  2 j 1 m");
-         if(jComboBox1.getSelectedIndex()==1){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
-           PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
-            PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-       }else if(jComboBox1.getSelectedIndex()==2){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll bekasi 1");
-            PilihTiket.namaBioskop2.setText("MAll bekasi2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-       }else if(jComboBox1.getSelectedIndex()==3){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll depok 1");
-            PilihTiket.namaBioskop2.setText("MAll depok 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }else if(jComboBox1.getSelectedIndex()==4){
-               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll bogor 1");
-            PilihTiket.namaBioskop2.setText("MAll bogor 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }else if(jComboBox1.getSelectedIndex()==5){
-               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
-            PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }
-         
+        if(lokasi1.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(null, "anda belum memilih lokasi", "Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+                    PilihTiket pilih = new PilihTiket();
+                   PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
+                   PilihTiket.KKN.setText("KKN di Desa Penari");
+                    PilihTiket.rincianFilm.setText("2022  Horror  2 j 1 m");
+                     if(lokasi1.getSelectedIndex()==1){
+                          PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
+                       PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
+                        PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
+                         pilih.setVisible(true);
+                         this.setVisible(false);
+                   }else if(lokasi1.getSelectedIndex()==2){
+                          PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
+                         PilihTiket.namaBioskop1.setText("MAll bekasi 1");
+                        PilihTiket.namaBioskop2.setText("MAll bekasi2");
+                         pilih.setVisible(true);
+                         this.setVisible(false);
+                   }else if(lokasi1.getSelectedIndex()==3){
+                          PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
+                         PilihTiket.namaBioskop1.setText("MAll depok 1");
+                        PilihTiket.namaBioskop2.setText("MAll depok 2");
+                         pilih.setVisible(true);
+                         this.setVisible(false);
+                    }else if(lokasi1.getSelectedIndex()==4){
+                           PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
+                         PilihTiket.namaBioskop1.setText("MAll bogor 1");
+                        PilihTiket.namaBioskop2.setText("MAll bogor 2");
+                         pilih.setVisible(true);
+                         this.setVisible(false);
+                    }else if(lokasi1.getSelectedIndex()==5){
+                           PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
+                         PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
+                        PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
+                         pilih.setVisible(true);
+                         this.setVisible(false);
+                    }
+      }
 
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:       
         //method untuk menentukan pilihan tiket sesuai gambar daan lokasi
-
-         PilihTiket pilih = new PilihTiket();
-       PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
-        PilihTiket.KKN.setText("Suzume");
-        PilihTiket.rincianFilm.setText("2022 ‧ Petualangan/Animasi ‧ 2 j 2 m");
-        if(jComboBox1.getSelectedIndex()==1){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
-           PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
-            PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-       }else if(jComboBox1.getSelectedIndex()==2){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll bekasi 1");
-            PilihTiket.namaBioskop2.setText("MAll bekasi2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-       }else if(jComboBox1.getSelectedIndex()==3){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll depok 1");
-            PilihTiket.namaBioskop2.setText("MAll depok 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }else if(jComboBox1.getSelectedIndex()==4){
-               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll bogor 1");
-            PilihTiket.namaBioskop2.setText("MAll bogor 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }else if(jComboBox1.getSelectedIndex()==5){
-               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
-            PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }
-        
+ if(lokasi1.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(null, "anda belum memilih lokasi", "Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+                PilihTiket pilih = new PilihTiket();
+                  PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
+                   PilihTiket.KKN.setText("Suzume");
+                   PilihTiket.rincianFilm.setText("2022 ‧ Petualangan/Animasi ‧ 2 j 2 m");
+                   if(lokasi1.getSelectedIndex()==1){
+                         PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
+                      PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
+                       PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
+                        pilih.setVisible(true);
+                        this.setVisible(false);
+                  }else if(lokasi1.getSelectedIndex()==2){
+                         PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
+                        PilihTiket.namaBioskop1.setText("MAll bekasi 1");
+                       PilihTiket.namaBioskop2.setText("MAll bekasi2");
+                        pilih.setVisible(true);
+                        this.setVisible(false);
+                  }else if(lokasi1.getSelectedIndex()==3){
+                         PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
+                        PilihTiket.namaBioskop1.setText("MAll depok 1");
+                       PilihTiket.namaBioskop2.setText("MAll depok 2");
+                        pilih.setVisible(true);
+                        this.setVisible(false);
+                   }else if(lokasi1.getSelectedIndex()==4){
+                          PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
+                        PilihTiket.namaBioskop1.setText("MAll bogor 1");
+                       PilihTiket.namaBioskop2.setText("MAll bogor 2");
+                        pilih.setVisible(true);
+                        this.setVisible(false);
+                   }else if(lokasi1.getSelectedIndex()==5){
+                          PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
+                        PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
+                       PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
+                        pilih.setVisible(true);
+                        this.setVisible(false);
+                   }
+           }  
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
         // TODO add your handling code here:
          //method untuk menentukan pilihan tiket sesuai gambar daan lokasi
-
-       PilihTiket pilih = new PilihTiket();
-       PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/evil.jpg")));
-       PilihTiket.KKN.setText("Evil Dead Rise");
-           PilihTiket.rincianFilm.setText("2023 ‧ Horor/Fantasi ‧ 1 j 36 m");
-       if(jComboBox1.getSelectedIndex()==1){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/evil.jpg")));
-           PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
-            PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-       }else if(jComboBox1.getSelectedIndex()==2){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/evil.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll bekasi 1");
-            PilihTiket.namaBioskop2.setText("MAll bekasi2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-       }else if(jComboBox1.getSelectedIndex()==3){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/evil.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll depok 1");
-            PilihTiket.namaBioskop2.setText("MAll depok 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }else if(jComboBox1.getSelectedIndex()==4){
-               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/evil.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll bogor 1");
-            PilihTiket.namaBioskop2.setText("MAll bogor 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }else if(jComboBox1.getSelectedIndex()==5){
-               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/evil.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
-            PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }
-      
+            if(lokasi1.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(null, "anda belum memilih lokasi", "Error", JOptionPane.ERROR_MESSAGE);
+                        PilihTiket pilih = new PilihTiket();
+                        PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/evil.jpg")));
+                        PilihTiket.KKN.setText("Evil Dead Rise");
+                            PilihTiket.rincianFilm.setText("2023 ‧ Horor/Fantasi ‧ 1 j 36 m");
+                        if(lokasi1.getSelectedIndex()==1){
+                               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/evil.jpg")));
+                            PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
+                             PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
+                              pilih.setVisible(true);
+                              this.setVisible(false);
+                        }else if(lokasi1.getSelectedIndex()==2){
+                               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/evil.jpg")));
+                              PilihTiket.namaBioskop1.setText("MAll bekasi 1");
+                             PilihTiket.namaBioskop2.setText("MAll bekasi2");
+                              pilih.setVisible(true);
+                              this.setVisible(false);
+                        }else if(lokasi1.getSelectedIndex()==3){
+                               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/evil.jpg")));
+                              PilihTiket.namaBioskop1.setText("MAll depok 1");
+                             PilihTiket.namaBioskop2.setText("MAll depok 2");
+                              pilih.setVisible(true);
+                              this.setVisible(false);
+                         }else if(lokasi1.getSelectedIndex()==4){
+                                PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/evil.jpg")));
+                              PilihTiket.namaBioskop1.setText("MAll bogor 1");
+                             PilihTiket.namaBioskop2.setText("MAll bogor 2");
+                              pilih.setVisible(true);
+                              this.setVisible(false);
+                         }else if(lokasi1.getSelectedIndex()==5){
+                                PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/evil.jpg")));
+                              PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
+                             PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
+                              pilih.setVisible(true);
+                              this.setVisible(false);
+                         }
+            }
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         // TODO add your handling code here:
        //method untuk menentukan pilihan tiket sesuai gambar daan lokasi
-
-      PilihTiket pilih = new PilihTiket();
-       PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/pope.jpg")));
-        PilihTiket.KKN.setText("The Pope's Exorcist");
-           PilihTiket.rincianFilm.setText("2023 ‧ Horor ‧ 1 j 43 m");
-         if(jComboBox1.getSelectedIndex()==1){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/pope.jpg")));
-           PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
-            PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-       }else if(jComboBox1.getSelectedIndex()==2){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/pope.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll bekasi 1");
-            PilihTiket.namaBioskop2.setText("MAll bekasi2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-       }else if(jComboBox1.getSelectedIndex()==3){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/pope.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll depok 1");
-            PilihTiket.namaBioskop2.setText("MAll depok 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }else if(jComboBox1.getSelectedIndex()==4){
-               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/pope.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll bogor 1");
-            PilihTiket.namaBioskop2.setText("MAll bogor 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }else if(jComboBox1.getSelectedIndex()==5){
-               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/pope.jpg")));
-             PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
-            PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }
-         
+if(lokasi1.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(null, "anda belum memilih lokasi", "Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+                PilihTiket pilih = new PilihTiket();
+                 PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/pope.jpg")));
+                  PilihTiket.KKN.setText("The Pope's Exorcist");
+                     PilihTiket.rincianFilm.setText("2023 ‧ Horor ‧ 1 j 43 m");
+                   if(lokasi1.getSelectedIndex()==1){
+                        PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/pope.jpg")));
+                     PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
+                      PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
+                       pilih.setVisible(true);
+                       this.setVisible(false);
+                 }else if(lokasi1.getSelectedIndex()==2){
+                        PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/pope.jpg")));
+                       PilihTiket.namaBioskop1.setText("MAll bekasi 1");
+                      PilihTiket.namaBioskop2.setText("MAll bekasi2");
+                       pilih.setVisible(true);
+                       this.setVisible(false);
+                 }else if(lokasi1.getSelectedIndex()==3){
+                        PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/pope.jpg")));
+                       PilihTiket.namaBioskop1.setText("MAll depok 1");
+                      PilihTiket.namaBioskop2.setText("MAll depok 2");
+                       pilih.setVisible(true);
+                       this.setVisible(false);
+                  }else if(lokasi1.getSelectedIndex()==4){
+                         PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/pope.jpg")));
+                       PilihTiket.namaBioskop1.setText("MAll bogor 1");
+                      PilihTiket.namaBioskop2.setText("MAll bogor 2");
+                       pilih.setVisible(true);
+                       this.setVisible(false);
+                  }else if(lokasi1.getSelectedIndex()==5){
+                         PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/pope.jpg")));
+                       PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
+                      PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
+                       pilih.setVisible(true);
+                       this.setVisible(false);
+                  }
+          }
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
         // namaa file gambar silent voice itu setelah S huruf i besar dan setelahnya l kecil
-      PilihTiket pilih = new PilihTiket();
-       PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
-        PilihTiket.KKN.setText("A Silent Voice");
-        PilihTiket.rincianFilm.setText("2016 ‧ Roman/Drama ‧ 2 j 9 m");
-        if(jComboBox1.getSelectedIndex()==1){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
-           PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
-            PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-       }else if(jComboBox1.getSelectedIndex()==2){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
-             PilihTiket.namaBioskop1.setText("MAll bekasi 1");
-            PilihTiket.namaBioskop2.setText("MAll bekasi2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-       }else if(jComboBox1.getSelectedIndex()==3){
-              PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
-             PilihTiket.namaBioskop1.setText("MAll depok 1");
-            PilihTiket.namaBioskop2.setText("MAll depok 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }else if(jComboBox1.getSelectedIndex()==4){
-               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
-             PilihTiket.namaBioskop1.setText("MAll bogor 1");
-            PilihTiket.namaBioskop2.setText("MAll bogor 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
-        }else if(jComboBox1.getSelectedIndex()==5){
-               PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
-             PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
-            PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
-             pilih.setVisible(true);
-             this.setVisible(false);
+        if(lokasi1.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(null, "anda belum memilih lokasi", "Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+                PilihTiket pilih = new PilihTiket();
+                 PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
+                  PilihTiket.KKN.setText("A Silent Voice");
+                  PilihTiket.rincianFilm.setText("2016 ‧ Roman/Drama ‧ 2 j 9 m");
+                  if(lokasi1.getSelectedIndex()==1){
+                        PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
+                     PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
+                      PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
+                       pilih.setVisible(true);
+                       this.setVisible(false);
+                 }else if(lokasi1.getSelectedIndex()==2){
+                        PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
+                       PilihTiket.namaBioskop1.setText("MAll bekasi 1");
+                      PilihTiket.namaBioskop2.setText("MAll bekasi2");
+                       pilih.setVisible(true);
+                       this.setVisible(false);
+                 }else if(lokasi1.getSelectedIndex()==3){
+                        PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
+                       PilihTiket.namaBioskop1.setText("MAll depok 1");
+                      PilihTiket.namaBioskop2.setText("MAll depok 2");
+                       pilih.setVisible(true);
+                       this.setVisible(false);
+                  }else if(lokasi1.getSelectedIndex()==4){
+                         PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
+                       PilihTiket.namaBioskop1.setText("MAll bogor 1");
+                      PilihTiket.namaBioskop2.setText("MAll bogor 2");
+                       pilih.setVisible(true);
+                       this.setVisible(false);
+                  }else if(lokasi1.getSelectedIndex()==5){
+                         PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
+                       PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
+                      PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
+                       pilih.setVisible(true);
+                       this.setVisible(false);
+                  }
         }
-        
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
@@ -454,37 +497,37 @@ public class HomePage extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jLabel2MouseClicked
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void lokasi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lokasi1ActionPerformed
         // TODO add your handling code here:
-        if(jComboBox1.getSelectedIndex()==1){
+        if(lokasi1.getSelectedIndex()==1){
             jLabel3.setVisible(true);
             jLabel4.setVisible(true);
             jLabel5.setVisible(true);
             jLabel6.setVisible(true);
             jLabel7.setVisible(true);
             jLabel8.setVisible(true);
-        }else if(jComboBox1.getSelectedIndex()==2){
+        }else if(lokasi1.getSelectedIndex()==2){
             jLabel3.setVisible(true);
             jLabel4.setVisible(true);
             jLabel5.setVisible(false);
             jLabel6.setVisible(true);
             jLabel7.setVisible(true);
             jLabel8.setVisible(true);
-        }else if(jComboBox1.getSelectedIndex()==3){
+        }else if(lokasi1.getSelectedIndex()==3){
             jLabel3.setVisible(true);
             jLabel4.setVisible(true);
             jLabel5.setVisible(true);
             jLabel6.setVisible(true);
             jLabel7.setVisible(true);
             jLabel8.setVisible(true);
-        }else if(jComboBox1.getSelectedIndex()==4){
+        }else if(lokasi1.getSelectedIndex()==4){
             jLabel3.setVisible(true);
             jLabel4.setVisible(true);
             jLabel5.setVisible(false);
             jLabel6.setVisible(true);
             jLabel7.setVisible(false);
             jLabel8.setVisible(true);
-        }else if(jComboBox1.getSelectedIndex()==5){
+        }else if(lokasi1.getSelectedIndex()==5){
             jLabel3.setVisible(true);
             jLabel4.setVisible(true);
             jLabel5.setVisible(true);
@@ -493,7 +536,14 @@ public class HomePage extends javax.swing.JFrame {
             jLabel8.setVisible(true);
             
         }
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_lokasi1ActionPerformed
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        // TODO add your handling code here:
+        Login keluar = new Login();
+        keluar.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jLabel9MouseClicked
 
     /**
      * @param args the command line arguments
@@ -531,7 +581,6 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -545,5 +594,6 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    public static javax.swing.JComboBox<String> lokasi1;
     // End of variables declaration//GEN-END:variables
 }

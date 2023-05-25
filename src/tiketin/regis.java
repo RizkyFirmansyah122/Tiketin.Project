@@ -1,5 +1,11 @@
 package tiketin;
-
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /*
@@ -12,13 +18,48 @@ import javax.swing.JOptionPane;
  * @author 62813
  */
 public class regis extends javax.swing.JFrame {
-
+        public Connection con;
+    public Statement stm;
+    public PreparedStatement pst;
+    public ResultSet rs = null;
+    
+    public class Koneksi{
+        public Koneksi(){
+            try {
+               String url = "jdbc:mysql://localhost:3306/tiketin";
+               String user = "root";
+               String pass = "";
+               Class.forName("com.mysql.cj.jdbc.Driver");
+               con= DriverManager.getConnection(url, user, pass);
+               stm = con.createStatement();
+            }       catch (ClassNotFoundException | SQLException e){
+                }
+        }
+    }
+    
     /**
      * Creates new form regis
      */
     public regis() {
         initComponents();
+       new Koneksi();
     }
+     public boolean checkRegist(String username)
+            {
+                try {
+                     String sqlcom = "select * from data_login";
+                     rs = con.createStatement().executeQuery(sqlcom);
+                    while(rs.next()){
+                        if(username.equals(rs.getString("username"))){
+                            return true;
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
+                return false;
+            }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,11 +72,11 @@ public class regis extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        userRegis = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        passRegis = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        telpRegis1 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -49,13 +90,13 @@ public class regis extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 204, 0));
         jLabel1.setText("Username");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 80, 30));
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 320, 240, -1));
+        jPanel2.add(userRegis, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 320, 240, -1));
 
         jLabel3.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 204, 0));
         jLabel3.setText("Password");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, 80, 30));
-        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 240, -1));
+        jPanel2.add(passRegis, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 240, -1));
 
         jLabel4.setForeground(new java.awt.Color(255, 204, 0));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -66,7 +107,7 @@ public class regis extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 510, 230, -1));
-        jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 440, 240, -1));
+        jPanel2.add(telpRegis1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 440, 240, -1));
 
         jLabel5.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 204, 0));
@@ -109,12 +150,34 @@ public class regis extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         // IINI KODE NGASAL YA WIL CUMA BUAT PERAGAAN NNTI LU UBAH LAGII 
-        if(jTextField1.getText().equals("")  && jTextField2.getText().equals("") && jTextField3.getText().equals("")){
-             JOptionPane.showMessageDialog(this,"data belum diisi semua");
-        }else{
-         Login pindah = new Login();
-        pindah.setVisible(true);
-        this.setVisible(false);
+           if (checkRegist(userRegis.getText())) {
+            JOptionPane.showMessageDialog(null, "Anda belum mengisi username", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } else if (passRegis.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Anda belum mengisi password", "ERROR", JOptionPane.ERROR_MESSAGE);
+            if (passRegis.getText().length() < 8) {
+                JOptionPane.showMessageDialog(null, "Password Minimal Harus Memiliki 8 Karakter", "Message", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else if (telpRegis1.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Anda belum mengisi nomor telepon", "ERROR", JOptionPane.ERROR_MESSAGE);
+            if (telpRegis1.getText().length() <= 10) {
+                JOptionPane.showMessageDialog(null, "Nomor Telepon Minimal Harus Memiliki 10 Karakter", "Message", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            String sql = "insert into login_user (username, password, no_telpon) values (?, ?, ?)";
+            try {
+                pst = con.prepareStatement(sql);
+                pst.setString(1, userRegis.getText());
+                pst.setString(2, passRegis.getText());
+                pst.setString(3, telpRegis1.getText());
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Data Berhasil Disimpan!");
+            } catch (HeadlessException | SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Password anda harus berupa angka", "Error",JOptionPane.ERROR_MESSAGE);
+            }
+
+            Login pindah = new Login();
+            pindah.setVisible(true);
+            this.setVisible(false);
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -162,8 +225,8 @@ public class regis extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField passRegis;
+    private javax.swing.JTextField telpRegis1;
+    private javax.swing.JTextField userRegis;
     // End of variables declaration//GEN-END:variables
 }

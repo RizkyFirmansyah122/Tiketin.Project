@@ -15,6 +15,8 @@ public class TiketIn {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Login masuk = new Login();
+        masuk.setVisible(true);
     }
     
 }

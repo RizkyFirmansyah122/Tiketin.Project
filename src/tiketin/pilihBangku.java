@@ -5,9 +5,20 @@
 package tiketin;
 
 import java.awt.Color;
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import javax.swing.AbstractButton;
+import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
+import static tiketin.HomePage.lokasi1;
 
 /**
  *
@@ -24,8 +35,27 @@ public class pilihBangku extends javax.swing.JFrame {
     private int i = 0;
      private codeC param = new codeC();
      
+      public Connection con; 
+    public Statement stm;
+    public PreparedStatement pst;
+    public ResultSet rs = null;
+    
+     public void Koneksi(){
+            try {
+               String url = "jdbc:mysql://localhost:3306/tiketin";
+               String user = "root";
+               String pass = "";
+               Class.forName("com.mysql.cj.jdbc.Driver");
+               con= DriverManager.getConnection(url, user, pass);
+               stm = con.createStatement();
+            }       catch (ClassNotFoundException | SQLException e){
+                }
+        }
+     
+     
     public pilihBangku() {
         initComponents();
+        Koneksi();
     }
     
     public void setKursiTersedia(java.awt.event.ActionEvent evt){
@@ -37,7 +67,7 @@ public class pilihBangku extends javax.swing.JFrame {
         dataKursi.removeIf(s ->  (s.equals(nomorKursi))   );
     
       }else{
-        jLabel5.setVisible(true);
+        keluaranKursi.setVisible(true);
         kursi.setBackground(Color.green);
         dataKursi.add(kursi.getText());
       }
@@ -56,9 +86,9 @@ public class pilihBangku extends javax.swing.JFrame {
       }
       
       param.setPesanBerapaKursi(kursi);
-      jLabel4.setText(""+param.getTotalHarga());
+      totalHarga.setText(""+param.getTotalHarga());
       Tekskursi = dataKursi.size() != 0 ? Tekskursi : "";
-      jLabel5.setText( Tekskursi );
+      keluaranKursi.setText( Tekskursi );
       System.out.println(dataKursi.size());
     }
 
@@ -116,9 +146,10 @@ public class pilihBangku extends javax.swing.JFrame {
         A4 = new javax.swing.JToggleButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        totalHarga = new javax.swing.JLabel();
+        keluaranKursi = new javax.swing.JLabel();
         jToggleButton33 = new javax.swing.JToggleButton();
+        ruangStudio = new javax.swing.JLabel();
 
         jDialog1.setBounds(new java.awt.Rectangle(0, 0, 366, 358));
         jDialog1.setLocation(new java.awt.Point(0, 0));
@@ -208,6 +239,7 @@ public class pilihBangku extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
+        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
         jPanel1.setPreferredSize(new java.awt.Dimension(547, 390));
 
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -450,7 +482,7 @@ public class pilihBangku extends javax.swing.JFrame {
 
         jLabel3.setText("NOMOR KURSI :");
 
-        jLabel4.setText("Rp.00");
+        totalHarga.setText("Rp.00");
 
         jToggleButton33.setText("Beli");
         jToggleButton33.addActionListener(new java.awt.event.ActionListener() {
@@ -463,17 +495,13 @@ public class pilihBangku extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(145, 145, 145))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(87, 87, 87)
+                        .addComponent(ruangStudio, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -541,7 +569,11 @@ public class pilihBangku extends javax.swing.JFrame {
                                         .addComponent(B8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(A8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(D8)))
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(keluaranKursi, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(totalHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(115, 115, 115)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -553,8 +585,12 @@ public class pilihBangku extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(ruangStudio, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(D3)
                     .addComponent(D4)
@@ -599,12 +635,12 @@ public class pilihBangku extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(keluaranKursi, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(totalHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jToggleButton33)
                 .addGap(21, 21, 21))
         );
@@ -641,13 +677,16 @@ public class pilihBangku extends javax.swing.JFrame {
 
     private void jToggleButton33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton33ActionPerformed
         // TODO add your handling code here:
-        transaksi bayar = new transaksi();
-        if(evt.getSource() == jToggleButton33 && param.getJumlahKursi() > 0){
-         jLabel10.setText(param.getTotalHarga()+"");
-         jDialog1.setLocationRelativeTo(null);
-         jDialog1.setVisible(true);
+        transaksi test = new transaksi();
+//        if(evt.getSource() == jToggleButton33 && param.getJumlahKursi() > 0){
+//         jLabel10.setText(param.getTotalHarga()+"");
+//         jDialog1.setLocationRelativeTo(null);
+//         jDialog1.setVisible(true);
+            test.setVisible(true);
+            test.hargaTransaksi.setText(totalHarga.getText());
+            this.setVisible(false);
          this.setVisible(false);       
-        }
+        
     }//GEN-LAST:event_jToggleButton33ActionPerformed
 
     private void D1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_D1ActionPerformed
@@ -851,8 +890,6 @@ public class pilihBangku extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -861,5 +898,10 @@ public class pilihBangku extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JToggleButton jToggleButton33;
+    public static javax.swing.JLabel keluaranKursi;
+    public static javax.swing.JLabel ruangStudio;
+    public static javax.swing.JLabel totalHarga;
     // End of variables declaration//GEN-END:variables
+
+    
 }
