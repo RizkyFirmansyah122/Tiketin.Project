@@ -11,16 +11,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
 /**
  *
  * @author 62813
  */
 public class HomePage extends javax.swing.JFrame {
-        public Connection con; 
+    public Connection con; 
     public Statement stm;
     public PreparedStatement pst;
     public ResultSet rs = null;
-    
+    private codeC param;
+    public String lokasi;
+    public String namaFilm;
     
      public void Koneksi(){
             try {
@@ -30,8 +33,9 @@ public class HomePage extends javax.swing.JFrame {
                Class.forName("com.mysql.cj.jdbc.Driver");
                con= DriverManager.getConnection(url, user, pass);
                stm = con.createStatement();
-            }       catch (ClassNotFoundException | SQLException e){
-                }
+            } catch (ClassNotFoundException | SQLException e){
+                
+            }
         }
 
     /**
@@ -41,8 +45,6 @@ public class HomePage extends javax.swing.JFrame {
         initComponents();
         Koneksi();
     }
-    
-    private codeC param = new codeC();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -391,7 +393,7 @@ public class HomePage extends javax.swing.JFrame {
                              PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
                               pilih.setVisible(true);
                               this.setVisible(false);
-                         }
+                         } 
             }
     }//GEN-LAST:event_jLabel8MouseClicked
 
@@ -499,6 +501,7 @@ if(lokasi1.getSelectedIndex()==0){
 
     private void lokasi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lokasi1ActionPerformed
         // TODO add your handling code here:
+                            
         if(lokasi1.getSelectedIndex()==1){
             jLabel3.setVisible(true);
             jLabel4.setVisible(true);
@@ -533,9 +536,10 @@ if(lokasi1.getSelectedIndex()==0){
             jLabel5.setVisible(true);
             jLabel6.setVisible(true);
             jLabel7.setVisible(true);
-            jLabel8.setVisible(true);
-            
+            jLabel8.setVisible(true);           
         }
+        
+        
     }//GEN-LAST:event_lokasi1ActionPerformed
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked

@@ -26,10 +26,13 @@ import javax.swing.JToggleButton;
  * @author 62813
  */
 public class PilihTiket extends javax.swing.JFrame {
-     public Connection con; 
+    public Connection con; 
     public Statement stm;
     public PreparedStatement pst;
     public ResultSet rs = null;
+    public codeC param;
+    public String waktu;
+    public String tanggal;
     
      public void Koneksi(){
             try {
@@ -81,9 +84,9 @@ public class PilihTiket extends javax.swing.JFrame {
             long toJam = selisih.toHours();
             long toMenit = selisih.toMinutesPart();
             pilihBangku bangku = new pilihBangku();
-            System.out.println(toJam);
-            System.out.println(toMenit);
-            System.out.println(jam.getText());
+//            System.out.println(toJam);
+//            System.out.println(toMenit);
+//            System.out.println(jam.getText());
 
             if(toJam <= 0 && toMenit <= 0 || !jToggleButton1.isSelected()){
                   boleh = true;
@@ -91,8 +94,7 @@ public class PilihTiket extends javax.swing.JFrame {
                  JOptionPane.showMessageDialog(null, "Maaf Film Sedang Berlangsung :(", "Film berlangsung mulai", JOptionPane.YES_OPTION);
                   boleh = false;  
             }
-        
-       
+//            waktu = jam.getText();           
     } 
     
     public void setSelectWarna(){
@@ -105,6 +107,11 @@ public class PilihTiket extends javax.swing.JFrame {
         for(int i = 0; i < allJ.length; i++){
           if(allJ[i].isSelected()){
             allJ[i].setBackground(Color.green);
+            if(i < 6){
+               tanggal = allJ[i].getText();
+            }else{
+               waktu = jam.getText();
+            }
           }else{
             allJ[i].setBackground(Color.white);
           }

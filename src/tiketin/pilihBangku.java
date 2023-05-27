@@ -33,9 +33,9 @@ public class pilihBangku extends javax.swing.JFrame {
     private List<String> dataKursi = new ArrayList<>();   
     private String Tekskursi = "";
     private int i = 0;
-     private codeC param = new codeC();
+    private codeC param = new codeC();
      
-      public Connection con; 
+    public Connection con; 
     public Statement stm;
     public PreparedStatement pst;
     public ResultSet rs = null;
@@ -49,23 +49,64 @@ public class pilihBangku extends javax.swing.JFrame {
                con= DriverManager.getConnection(url, user, pass);
                stm = con.createStatement();
             }       catch (ClassNotFoundException | SQLException e){
-                }
+                
+            }
         }
      
      
     public pilihBangku() {
         initComponents();
         Koneksi();
+        setBookKursi();
     }
     
+    public void setBookKursi(){
+                JToggleButton[]chair = {A1,A2,A3,A4,A5,A6,A7,A8,B1,B2,B3,B4,B5,B6,B7,B8,C1,C2,C3,C4,C5,C6,C7,C8,D1,D2,D3,D4,D5,D6,D7,D8};
+                
+                 String nilaiTanggal ="";
+         List<AbstractButton> listToogleButton = Collections.list(PilihTiket.pilihHari1.getElements());
+        for (AbstractButton button : listToogleButton) {
+            if(button.isSelected()){
+                nilaiTanggal = button.getText();                
+            }
+        }
+        
+            String jamTayang ="";
+         List<AbstractButton> listToogleButton2 = Collections.list(PilihTiket.pilihJamBioskop1.getElements());
+        for (AbstractButton button : listToogleButton2) {
+            if(button.isSelected()){
+                jamTayang = button.getText();   
+            }
+        }
+        
+        param.setLokasi(""+HomePage.lokasi1.getSelectedItem());
+        param.setJam(jamTayang);
+        param.setTanggal(nilaiTanggal);
+        param.setFilm(PilihTiket.KKN.getText());   
+         
+             for(JToggleButton kursi : chair){
+                 param.Koneksi();
+                 param.setAllStr();
+                 param.dataKursi();
+                 param.setEnab(kursi);
+             }  
+              System.out.println(param.allTrue() + " WOi");
+    }
+    
+    
+    
+    
+        
+    
+    
+        
     public void setKursiTersedia(java.awt.event.ActionEvent evt){
   
       JToggleButton kursi = (JToggleButton) evt.getSource();
       String nomorKursi = kursi.getText();
       if(kursi.getBackground() == Color.green){
-        kursi.setBackground(null);
+        kursi.setBackground(Color.white);
         dataKursi.removeIf(s ->  (s.equals(nomorKursi))   );
-    
       }else{
         keluaranKursi.setVisible(true);
         kursi.setBackground(Color.green);
@@ -88,8 +129,7 @@ public class pilihBangku extends javax.swing.JFrame {
       param.setPesanBerapaKursi(kursi);
       totalHarga.setText(""+param.getTotalHarga());
       Tekskursi = dataKursi.size() != 0 ? Tekskursi : "";
-      keluaranKursi.setText( Tekskursi );
-      System.out.println(dataKursi.size());
+      keluaranKursi.setText( Tekskursi );   
     }
 
     /**
