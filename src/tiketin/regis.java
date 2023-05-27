@@ -147,9 +147,15 @@ public class regis extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jLabel4MouseClicked
 
+    /**
+ * Metode ini dipanggil ketika tombol jButton1 di klik.
+ * Metode ini menangani logika penggunaan tombol tersebut.
+ *
+ * @param evt Objek ActionEvent yang mewakili event yang terjadi.
+ */
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        // IINI KODE NGASAL YA WIL CUMA BUAT PERAGAAN NNTI LU UBAH LAGII 
            if (checkRegist(userRegis.getText())) {
             JOptionPane.showMessageDialog(null, "Anda belum mengisi username", "ERROR", JOptionPane.ERROR_MESSAGE);
         } else if (passRegis.getText().equals("")) {

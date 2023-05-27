@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package tiketin;
+import java.awt.Color;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,6 +16,8 @@ import javax.swing.JToggleButton;
 /**
  *
  * @author 62813
+ * Kelas HomePage adalah kelas utama yang merepresentasikan halaman utama aplikasi
+ * 
  */
 public class HomePage extends javax.swing.JFrame {
     public Connection con; 
@@ -24,6 +27,13 @@ public class HomePage extends javax.swing.JFrame {
     private codeC param;
     public String lokasi;
     public String namaFilm;
+    
+/**
+ *
+ * @author 62813
+ * Method untuk melakukan koneksi ke database.
+ * 
+ */
     
      public void Koneksi(){
             try {
@@ -45,6 +55,9 @@ public class HomePage extends javax.swing.JFrame {
     public HomePage() {
         initComponents();
         Koneksi();
+         getContentPane().setBackground(new Color(255, 255, 255));
+        slideshow1.initSlideshow(new slide.Slide1(), new slide.Slide2(), new slide.Slide3(), new slide.Slide4(), new slide.Slide5(), new slide.Slide6());
+        
     }
 
     /**
@@ -70,6 +83,7 @@ public class HomePage extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        slideshow1 = new slide.Slideshow();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -203,6 +217,7 @@ public class HomePage extends javax.swing.JFrame {
         );
 
         jPanel1.add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 600, 510, 80));
+        jPanel1.add(slideshow1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 380, 120));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -234,32 +249,32 @@ public class HomePage extends javax.swing.JFrame {
                PilihTiket.rincianFilm.setText("2019 ‧ Laga/Fiksi ilmiah ‧ 3 j 1 m");
                if(lokasi1.getSelectedIndex()==1){
                       PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
-                   PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
-                    PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
+                   PilihTiket.namaBioskop1.setText("Kelapa Gading");
+                    PilihTiket.namaBioskop2.setText("Grand Indonesiaa");
                      pilih.setVisible(true);
                      this.setVisible(false);
                }else if(lokasi1.getSelectedIndex()==2){
                       PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
-                     PilihTiket.namaBioskop1.setText("MAll bekasi 1");
-                    PilihTiket.namaBioskop2.setText("MAll bekasi2");
+                     PilihTiket.namaBioskop1.setText("BCP Park");
+                    PilihTiket.namaBioskop2.setText("Summarecon Bekasi");
                      pilih.setVisible(true);
                      this.setVisible(false);
                }else if(lokasi1.getSelectedIndex()==3){
                       PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
-                     PilihTiket.namaBioskop1.setText("MAll depok 1");
-                    PilihTiket.namaBioskop2.setText("MAll depok 2");
+                     PilihTiket.namaBioskop1.setText("Depok ITC");
+                    PilihTiket.namaBioskop2.setText("D'Mall Depok");
                      pilih.setVisible(true);
                      this.setVisible(false);
                 }else if(lokasi1.getSelectedIndex()==4){
                        PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
-                     PilihTiket.namaBioskop1.setText("MAll bogor 1");
-                    PilihTiket.namaBioskop2.setText("MAll bogor 2");
+                     PilihTiket.namaBioskop1.setText("BTM Bogor");
+                    PilihTiket.namaBioskop2.setText("AEON Mall Sentul");
                      pilih.setVisible(true);
                      this.setVisible(false);
                 }else if(lokasi1.getSelectedIndex()==5){
                        PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
-                     PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
-                    PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
+                     PilihTiket.namaBioskop1.setText("AEON Mall Tanggerang");
+                    PilihTiket.namaBioskop2.setText("Alam Sutra");
                      pilih.setVisible(true);
                      this.setVisible(false);
                 }
@@ -268,7 +283,7 @@ public class HomePage extends javax.swing.JFrame {
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
-        //ethod untuk menentukan pilihan tiket sesuai gambar daan lokasi
+        //method untuk menentukan pilihan tiket sesuai gambar daan lokasi
         if(lokasi1.getSelectedIndex()==0){
             JOptionPane.showMessageDialog(null, "anda belum memilih lokasi", "Error", JOptionPane.ERROR_MESSAGE);
         }else{
@@ -278,32 +293,32 @@ public class HomePage extends javax.swing.JFrame {
                     PilihTiket.rincianFilm.setText("2022  Horror  2 j 1 m");
                      if(lokasi1.getSelectedIndex()==1){
                           PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
-                       PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
-                        PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
+                       PilihTiket.namaBioskop1.setText("Kelapa Gading");
+                        PilihTiket.namaBioskop2.setText("Grand Indonesia");
                          pilih.setVisible(true);
                          this.setVisible(false);
                    }else if(lokasi1.getSelectedIndex()==2){
                           PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
-                         PilihTiket.namaBioskop1.setText("MAll bekasi 1");
-                        PilihTiket.namaBioskop2.setText("MAll bekasi2");
+                         PilihTiket.namaBioskop1.setText("BCP Park");
+                        PilihTiket.namaBioskop2.setText("Summarecon Bekasi");
                          pilih.setVisible(true);
                          this.setVisible(false);
                    }else if(lokasi1.getSelectedIndex()==3){
                           PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
-                         PilihTiket.namaBioskop1.setText("MAll depok 1");
-                        PilihTiket.namaBioskop2.setText("MAll depok 2");
+                         PilihTiket.namaBioskop1.setText("Depok ITC");
+                        PilihTiket.namaBioskop2.setText("D'Mall Depok");
                          pilih.setVisible(true);
                          this.setVisible(false);
                     }else if(lokasi1.getSelectedIndex()==4){
                            PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
-                         PilihTiket.namaBioskop1.setText("MAll bogor 1");
-                        PilihTiket.namaBioskop2.setText("MAll bogor 2");
+                         PilihTiket.namaBioskop1.setText("BTM Bogir");
+                        PilihTiket.namaBioskop2.setText("AEON Mall Sentul");
                          pilih.setVisible(true);
                          this.setVisible(false);
                     }else if(lokasi1.getSelectedIndex()==5){
                            PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
-                         PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
-                        PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
+                         PilihTiket.namaBioskop1.setText("AEON Mall Tanggerang");
+                        PilihTiket.namaBioskop2.setText("Alam Sutra");
                          pilih.setVisible(true);
                          this.setVisible(false);
                     }
@@ -323,32 +338,32 @@ public class HomePage extends javax.swing.JFrame {
                    PilihTiket.rincianFilm.setText("2022 ‧ Petualangan/Animasi ‧ 2 j 2 m");
                    if(lokasi1.getSelectedIndex()==1){
                          PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
-                      PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
-                       PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
+                      PilihTiket.namaBioskop1.setText("Kelapa Gading");
+                       PilihTiket.namaBioskop2.setText("Grand Indonesia");
                         pilih.setVisible(true);
                         this.setVisible(false);
                   }else if(lokasi1.getSelectedIndex()==2){
                          PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
-                        PilihTiket.namaBioskop1.setText("MAll bekasi 1");
-                       PilihTiket.namaBioskop2.setText("MAll bekasi2");
+                        PilihTiket.namaBioskop1.setText("BCP Park");
+                       PilihTiket.namaBioskop2.setText("Sumarecon Bekasi");
                         pilih.setVisible(true);
                         this.setVisible(false);
                   }else if(lokasi1.getSelectedIndex()==3){
                          PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
-                        PilihTiket.namaBioskop1.setText("MAll depok 1");
-                       PilihTiket.namaBioskop2.setText("MAll depok 2");
+                        PilihTiket.namaBioskop1.setText("Depok ITC");
+                       PilihTiket.namaBioskop2.setText("D'Mall Depok");
                         pilih.setVisible(true);
                         this.setVisible(false);
                    }else if(lokasi1.getSelectedIndex()==4){
                           PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
-                        PilihTiket.namaBioskop1.setText("MAll bogor 1");
-                       PilihTiket.namaBioskop2.setText("MAll bogor 2");
+                        PilihTiket.namaBioskop1.setText("BTM Bogor");
+                       PilihTiket.namaBioskop2.setText("AEON  Mall Sentul");
                         pilih.setVisible(true);
                         this.setVisible(false);
                    }else if(lokasi1.getSelectedIndex()==5){
                           PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
-                        PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
-                       PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
+                        PilihTiket.namaBioskop1.setText("AEON  Mall Tanggerang");
+                       PilihTiket.namaBioskop2.setText("Alam Sutra");
                         pilih.setVisible(true);
                         this.setVisible(false);
                    }
@@ -454,32 +469,32 @@ if(lokasi1.getSelectedIndex()==0){
                   PilihTiket.rincianFilm.setText("2016 ‧ Roman/Drama ‧ 2 j 9 m");
                   if(lokasi1.getSelectedIndex()==1){
                         PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
-                     PilihTiket.namaBioskop1.setText("MAll Jakarta 1");
-                      PilihTiket.namaBioskop2.setText("MAll Jakarta 2");
+                     PilihTiket.namaBioskop1.setText("Kelapa Gading");
+                      PilihTiket.namaBioskop2.setText("Grand Indonesia");
                        pilih.setVisible(true);
                        this.setVisible(false);
                  }else if(lokasi1.getSelectedIndex()==2){
                         PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
-                       PilihTiket.namaBioskop1.setText("MAll bekasi 1");
-                      PilihTiket.namaBioskop2.setText("MAll bekasi2");
+                       PilihTiket.namaBioskop1.setText("BCP Park");
+                      PilihTiket.namaBioskop2.setText("Summarecon Bekasi");
                        pilih.setVisible(true);
                        this.setVisible(false);
                  }else if(lokasi1.getSelectedIndex()==3){
                         PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
-                       PilihTiket.namaBioskop1.setText("MAll depok 1");
-                      PilihTiket.namaBioskop2.setText("MAll depok 2");
+                       PilihTiket.namaBioskop1.setText("Depok ITC" );
+                      PilihTiket.namaBioskop2.setText("D'Mall Depok ");
                        pilih.setVisible(true);
                        this.setVisible(false);
                   }else if(lokasi1.getSelectedIndex()==4){
                          PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
-                       PilihTiket.namaBioskop1.setText("MAll bogor 1");
-                      PilihTiket.namaBioskop2.setText("MAll bogor 2");
+                       PilihTiket.namaBioskop1.setText("BTM Bogor");
+                      PilihTiket.namaBioskop2.setText("AEON Mall Sentul");
                        pilih.setVisible(true);
                        this.setVisible(false);
                   }else if(lokasi1.getSelectedIndex()==5){
                          PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
-                       PilihTiket.namaBioskop1.setText("MAll  tanggerang 1");
-                      PilihTiket.namaBioskop2.setText("MAll tanggerang 2");
+                       PilihTiket.namaBioskop1.setText("AEON Mall Tannggerang");
+                      PilihTiket.namaBioskop2.setText("Alam Sutra ");
                        pilih.setVisible(true);
                        this.setVisible(false);
                   }
@@ -598,5 +613,6 @@ if(lokasi1.getSelectedIndex()==0){
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public static javax.swing.JComboBox<String> lokasi1;
+    private slide.Slideshow slideshow1;
     // End of variables declaration//GEN-END:variables
 }

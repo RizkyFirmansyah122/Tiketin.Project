@@ -22,9 +22,6 @@ import javax.swing.JToggleButton;
  * @author huawei
  */
 public class codeC implements kursi{
-//    private String url = "jdbc:mysql://localhost:3306/tiketin";
-//    private String user = "root";
-//    private  String pass = "";
     private int jumlahKursi = 0;
     private int hargaTiket[] = {45000,50000,35000,50000,40000};
     private int totalHarga;
@@ -57,30 +54,6 @@ public class codeC implements kursi{
        no = nomorKursi;
      }
      
-     private PreparedStatement ps;
-     public void setALLConec(){
-        try{
-          stm = con.createStatement();
-          String query = "INSERT INTO data_penonton (LOKASI, NOMOR_TEATER, JUDUL_FILM, JAM_TAYANG, TANGGAL, NOMOR_KURSI) VALUES (?,?,?,?,?,?)";
-                
-                ps = con.prepareStatement(query);
-                for (String nomorKursi : list){
-                ps.setString(1, getLokasi());
-                ps.setInt(2, 1);
-                ps.setString(3, getFilm());
-                ps.setString(4, getJam());
-                ps.setString(5, getTanggal());
-                ps.setString(6, nomorKursi);
-                ps.executeUpdate();
-                System.out.println("Inter, Sukses terhubung ke database PostgreSQL");  
-                }
-                list.clear();
-      }catch(SQLException ex){
-            System.out.println("Inter C all, Gagal terhubung ke database PostgreSQL");
-            ex.printStackTrace();
-      }
-    }
-    
     public int getJumlahKursi(){
       return jumlahKursi;
     }
@@ -189,15 +162,11 @@ public class codeC implements kursi{
                          a = rs.getString("lokasi").equalsIgnoreCase(  getLokasi() );
                          b = rs.getString("nama_film").equalsIgnoreCase( getFilm() );
                          c = rs.getString("pilih_hari").equalsIgnoreCase(   getTanggal());
-                         d = rs.getString("jam_tayang").equalsIgnoreCase(      getJam());
-                         
-//                         System.out.println(getLokasi() + " " + getFilm() + " " + getTanggal() + " " + getJam());
-//                         System.out.println( a +" "+ b + " " +c + " " + d + " GAss");
-                         
+                         d = rs.getString("jam_tayang").equalsIgnoreCase(      getJam());                       
                          boolean aa= a && b && c && d;    
-                         if(aa == true){
-                           truA = aa;    
-                         }  
+                            if(aa == true){
+                                 truA = aa;    
+                            }  
                     }
                     
         }catch(SQLException ex){
@@ -215,35 +184,10 @@ public class codeC implements kursi{
         return truA;
     }
     
-    public void setGaje(JToggleButton kursi){
-        try{      
-                  String query = "SELECT lokasi, judul_film, nomor_kursi, jam_tayang, tanggal FROM data_penonton";
-                  rs = stm.executeQuery(query);
-                  boolean a =  false, b = false, c = false,d = false, e = false;
-                    while(rs.next() ){
-                         a = rs.getString("lokasi").equalsIgnoreCase(getLokasi());
-                         b = rs.getString("judul_film").equalsIgnoreCase(getFilm());
-                         c = rs.getString("nomor_kursi").equalsIgnoreCase(kursi.getText());
-                         d = rs.getString("jam_tayang").equalsIgnoreCase(getJam());
-                         e = rs.getString("tanggal").equalsIgnoreCase(getTanggal());
-                        
-                         if(a &&  b && c && d && e){
-                            kursi.setEnabled(false);
-                         }else{
-
-                        }
-                    }
-        }catch(SQLException ex){
-              System.out.println("Inter C 2, Gagal terhubung ke database PostgreSQL");
-              ex.printStackTrace();
-        }
-    }
-    
     public void setEnableKursi(JToggleButton kursi){
          boolean a =  false, b = false, c = false,d = false, e = false;
         
          String ff = "";      
-//         setAllStr(); // Jangan DI buka!!
           for(int i = 0; i < list.size(); i++){
              System.out.println("Masuk Ke Enable");
           if(kursi.getText().equalsIgnoreCase(list.get(i) ) && truA  ){
@@ -258,24 +202,19 @@ public class codeC implements kursi{
         
          for(int i = 0; i < list.size(); i++){
              System.out.println("Masuk Ke Enable");
-          if(kursi.getText().equalsIgnoreCase(list.get(i) ) && truA  ){
-              System.out.println("Masuk Ke Enable");
-              kursi.setEnabled(false);
-          }           
+                if(kursi.getText().equalsIgnoreCase(list.get(i) ) && truA  ){
+                    System.out.println("Masuk Ke Enable");
+                    kursi.setEnabled(false);
+                }           
          }       
    
-   }
-        
-        
-    
-    
+   }    
 }
 
 interface kursi{
     void setEnableKursi(JToggleButton kursi);
     int getJumlahKursi();
 }
-
 
 interface autoConnec {
     public String Connec();

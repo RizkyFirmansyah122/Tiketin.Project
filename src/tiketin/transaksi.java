@@ -195,6 +195,23 @@ public class transaksi extends javax.swing.JFrame {
                  
             }
         }
+        
+        /**
+ * Menyimpan data ke dalam tabel "home_page" menggunakan query SQL.
+ * Data yang disimpan mencakup lokasi, nama film, hari pemutaran, studio, jam tayang,
+ * bangku yang dipilih, total harga, dan nomor telepon.
+ *
+ * @param sql                Query SQL untuk menyimpan data ke dalam tabel.
+ * @param nilaiTanggal       Nilai tanggal yang dipilih dari elemen pilihHari1.
+ * @param ruangStudio        Objek JTextField yang berisi informasi tentang pilih_studio.
+ * @param jamTayang          Nilai jam tayang yang dipilih dari elemen pilihJamBioskop1.
+ * @param keluaranKursi      Objek JTextField yang berisi informasi tentang pilih_bangku.
+ * @param totalHarga         Objek JTextField yang berisi informasi tentang total_harga.
+ * @param nomorDiTrans       Objek JTextField yang berisi nomor telepon.
+ * @throws HeadlessException Jika operasi ini dilakukan pada sistem headless.
+ * @throws SQLException      Jika terjadi kesalahan dalam menjalankan query SQL.
+ */
+        
         String sql = "insert into home_page (lokasi, nama_film, pilih_hari, pilih_studio, jam_tayang, pilih_bangku, total_harga, nomor_telepon) values (?, ?, ?, ?,?,?,?, ?)";
         //System.out.println(ruangStudio.getText());
         try{

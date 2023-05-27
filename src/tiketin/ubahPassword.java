@@ -130,6 +130,18 @@ public class ubahPassword extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jLabel3MouseClicked
 
+    /**
+ * Mengubah password pengguna dalam tabel "login_user" menggunakan query SQL UPDATE.
+ * Password baru ditentukan oleh nilai yang diambil dari JTextField jTextField1.
+ * Nomor telepon pengguna yang sesuai dengan password yang akan diubah ditentukan oleh
+ * nilai yang diambil dari JTextField jTextField2.
+ *
+ * @param sql          Query SQL untuk mengubah password dalam tabel.
+ * @param jTextField1  Objek JTextField yang berisi password baru.
+ * @param jTextField2  Objek JTextField yang berisi nomor telepon pengguna.
+ * @throws SQLException Jika terjadi kesalahan dalam menjalankan query SQL.
+ */
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
          String sql = "UPDATE `login_user` SET `password` = ? where no_telpon = ?";

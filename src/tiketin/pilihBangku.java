@@ -69,6 +69,10 @@ public class pilihBangku extends javax.swing.JFrame {
         str4 = "";
     }
     
+ /**
+     * Mengatur status booking kursi berdasarkan kondisi tombol toggle kursi
+     */
+    
     public void setBookKursi(){
                 JToggleButton[]chair = {A1,A2,A3,A4,A5,A6,A7,A8,B1,B2,B3,B4,B5,B6,B7,B8,C1,C2,C3,C4,C5,C6,C7,C8,D1,D2,D3,D4,D5,D6,D7,D8};
                 
@@ -103,9 +107,9 @@ public class pilihBangku extends javax.swing.JFrame {
                  param.Koneksi();
                  param.setAllStr();
                  param.dataKursi();
-//                 param.setEnab(kursi);
-                 param.setALLConec();
-                 param.setGaje(kursi);
+               param.setEnab(kursi);
+                 //param.setALLConec();
+               //  param.setGaje(kursi);
              }  
               System.out.println(param.allTrue() + " WOi");
     }
@@ -735,13 +739,9 @@ public class pilihBangku extends javax.swing.JFrame {
     private void jToggleButton33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton33ActionPerformed
         // TODO add your handling code here:
         transaksi test = new transaksi();
-//        if(evt.getSource() == jToggleButton33 && param.getJumlahKursi() > 0){
-//         jLabel10.setText(param.getTotalHarga()+"");
-//         jDialog1.setLocationRelativeTo(null);
-//         jDialog1.setVisible(true);
-            test.setVisible(true);
-            test.hargaTransaksi.setText(totalHarga.getText());
-            this.setVisible(false);
+        test.setVisible(true);
+        test.hargaTransaksi.setText(totalHarga.getText());
+        this.setVisible(false);
          this.setVisible(false);       
         
     }//GEN-LAST:event_jToggleButton33ActionPerformed
