@@ -542,6 +542,7 @@ public class PilihTiket extends javax.swing.JFrame {
         HomePage home = new HomePage();
         home.setVisible(true);
         this.setVisible(false);
+//        this.dispose();
     }//GEN-LAST:event_jLabel9MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

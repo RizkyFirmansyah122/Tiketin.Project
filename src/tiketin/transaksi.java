@@ -214,6 +214,9 @@ public class transaksi extends javax.swing.JFrame {
                 }catch(HeadlessException | SQLException ex){
                      JOptionPane.showMessageDialog(this, ex.getMessage());
                   }
+        HomePage home = new HomePage();
+        home.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

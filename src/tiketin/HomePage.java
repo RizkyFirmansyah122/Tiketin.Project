@@ -545,9 +545,7 @@ if(lokasi1.getSelectedIndex()==0){
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         // TODO add your handling code here:
-        Login keluar = new Login();
-        keluar.setVisible(true);
-        this.setVisible(false);
+        System.exit(0);
     }//GEN-LAST:event_jLabel9MouseClicked
 
     /**

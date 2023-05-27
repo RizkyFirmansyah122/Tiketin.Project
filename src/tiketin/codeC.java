@@ -50,6 +50,36 @@ public class codeC implements kursi{
                 System.out.println(e);
             }
         }
+     
+     String no;
+     public void setNoKursi(String nomorKursi){
+       dataKursi.add(nomorKursi);
+       no = nomorKursi;
+     }
+     
+     private PreparedStatement ps;
+     public void setALLConec(){
+        try{
+          stm = con.createStatement();
+          String query = "INSERT INTO data_penonton (LOKASI, NOMOR_TEATER, JUDUL_FILM, JAM_TAYANG, TANGGAL, NOMOR_KURSI) VALUES (?,?,?,?,?,?)";
+                
+                ps = con.prepareStatement(query);
+                for (String nomorKursi : list){
+                ps.setString(1, getLokasi());
+                ps.setInt(2, 1);
+                ps.setString(3, getFilm());
+                ps.setString(4, getJam());
+                ps.setString(5, getTanggal());
+                ps.setString(6, nomorKursi);
+                ps.executeUpdate();
+                System.out.println("Inter, Sukses terhubung ke database PostgreSQL");  
+                }
+                list.clear();
+      }catch(SQLException ex){
+            System.out.println("Inter C all, Gagal terhubung ke database PostgreSQL");
+            ex.printStackTrace();
+      }
+    }
     
     public int getJumlahKursi(){
       return jumlahKursi;
@@ -122,6 +152,7 @@ public class codeC implements kursi{
                
                 if(b.length() == 2){
                    list.add(b);
+                   setNoKursi(b);
                    b = "";
                 }
             }          
@@ -182,6 +213,30 @@ public class codeC implements kursi{
     
     public boolean allTrue(){
         return truA;
+    }
+    
+    public void setGaje(JToggleButton kursi){
+        try{      
+                  String query = "SELECT lokasi, judul_film, nomor_kursi, jam_tayang, tanggal FROM data_penonton";
+                  rs = stm.executeQuery(query);
+                  boolean a =  false, b = false, c = false,d = false, e = false;
+                    while(rs.next() ){
+                         a = rs.getString("lokasi").equalsIgnoreCase(getLokasi());
+                         b = rs.getString("judul_film").equalsIgnoreCase(getFilm());
+                         c = rs.getString("nomor_kursi").equalsIgnoreCase(kursi.getText());
+                         d = rs.getString("jam_tayang").equalsIgnoreCase(getJam());
+                         e = rs.getString("tanggal").equalsIgnoreCase(getTanggal());
+                        
+                         if(a &&  b && c && d && e){
+                            kursi.setEnabled(false);
+                         }else{
+
+                        }
+                    }
+        }catch(SQLException ex){
+              System.out.println("Inter C 2, Gagal terhubung ke database PostgreSQL");
+              ex.printStackTrace();
+        }
     }
     
     public void setEnableKursi(JToggleButton kursi){

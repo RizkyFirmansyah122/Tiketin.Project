@@ -58,6 +58,15 @@ public class pilihBangku extends javax.swing.JFrame {
         initComponents();
         Koneksi();
         setBookKursi();
+//        setReset();
+    }
+    
+    private String str1,str2,str3,str4;
+    public void setReset(){
+        str1 = "";
+        str2 = "";
+        str3 = "";
+        str4 = "";
     }
     
     public void setBookKursi(){
@@ -79,16 +88,24 @@ public class pilihBangku extends javax.swing.JFrame {
             }
         }
         
-        param.setLokasi(""+HomePage.lokasi1.getSelectedItem());
-        param.setJam(jamTayang);
-        param.setTanggal(nilaiTanggal);
-        param.setFilm(PilihTiket.KKN.getText());   
+        str1 = ""+HomePage.lokasi1.getSelectedItem();
+        str2 = jamTayang;
+        str3 = nilaiTanggal;
+        str4 = PilihTiket.KKN.getText();
+
+        
+        param.setLokasi(str1);
+        param.setJam(str2);
+        param.setTanggal(str3);
+        param.setFilm(str4);   
          
              for(JToggleButton kursi : chair){
                  param.Koneksi();
                  param.setAllStr();
                  param.dataKursi();
-                 param.setEnab(kursi);
+//                 param.setEnab(kursi);
+                 param.setALLConec();
+                 param.setGaje(kursi);
              }  
               System.out.println(param.allTrue() + " WOi");
     }
@@ -703,7 +720,7 @@ public class pilihBangku extends javax.swing.JFrame {
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
         PilihTiket pilihTiket = new PilihTiket();
-        pilihTiket.setVisible(true);
+        pilihTiket.setVisible(false);
         this.setVisible(false);
     }//GEN-LAST:event_jLabel1MouseClicked
 
