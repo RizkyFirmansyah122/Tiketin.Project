@@ -33,6 +33,7 @@ public class HomePage extends javax.swing.JFrame {
                Class.forName("com.mysql.cj.jdbc.Driver");
                con= DriverManager.getConnection(url, user, pass);
                stm = con.createStatement();
+               System.out.println("Berhasil Konek Home");
             } catch (ClassNotFoundException | SQLException e){
                 
             }
