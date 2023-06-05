@@ -21,7 +21,7 @@ import javax.swing.JToggleButton;
  *
  * @author huawei
  */
-public class codeC implements kursi{
+public class codeC extends getDatas implements kursi{
     private int jumlahKursi = 0;
     private int hargaTiket[] = {45000,50000,35000,50000,40000};
     private int totalHarga;
@@ -29,11 +29,22 @@ public class codeC implements kursi{
     private int hargaFilm;
     private List<String> dataKursi = new ArrayList<>();    
     private String a  = "";
-    
-    public Connection con; 
-    public Statement stm;
-    public PreparedStatement pst;
+    private boolean aa =  false, bb = false, cc = false,dd = false, ee = false;  
+   
+    public Connection con = null; 
+    public Statement stm = null;
+    public PreparedStatement pst = null;
     public ResultSet rs = null;
+    
+    private List<String>home = new ArrayList<>();
+    private List<String>pilihTik = new ArrayList<>();
+    private List<String>randm = new ArrayList<>();
+
+    public codeC(String tanggal, String lokasi, String film, String jam) {
+        super(tanggal, lokasi, film, jam);
+    }
+  
+    public codeC(){}
     
      public void Koneksi(){
             try {
@@ -41,14 +52,25 @@ public class codeC implements kursi{
                String user = "root";
                String pass = "";
                Class.forName("com.mysql.cj.jdbc.Driver");
-               con= DriverManager.getConnection(url, user, pass);
+               con = DriverManager.getConnection(url, user, pass);
                stm = con.createStatement();
+               
             }       catch (ClassNotFoundException | SQLException e){
                 System.out.println(e);
             }
         }
      
+    public void setCloseReset(){
+          try {
+               con.close();
+               stm.close();
+            }  catch (SQLException ex){
+                System.out.println(ex);
+            }
+     }
+     
      String no;
+     
      public void setNoKursi(String nomorKursi){
        dataKursi.add(nomorKursi);
        no = nomorKursi;
@@ -132,29 +154,29 @@ public class codeC implements kursi{
         } 
     }
     
-    public void dataKursi(){
+    public void setAllStr(){
         String ff = "";
+    
         try{      
                   String query = "SELECT pilih_bangku FROM home_page WHERE pilih_hari = " +"'" +getTanggal()
                                                                       + "' AND lokasi = '" +getLokasi()
                                                                       + "' AND nama_film = '" +getFilm()
                                                                       + "' AND jam_tayang = '" +getJam()+ "'" ;
-                  rs = stm.executeQuery(query);
-                    while(rs.next() ){
+            rs = stm.executeQuery(query);
+                while(rs.next() ){
                          String pisah = ""+rs.getString("pilih_bangku");
                          setMisahString(pisah);   
-                    }      
+                }
         }catch(SQLException ex){
               System.out.println("Inter C 2, Gagal terhubung ke database PostgreSQL");
               ex.printStackTrace();
         }
-    }
-    
-    private boolean aa =  false, bb = false, cc = false,dd = false, ee = false;  
-    public void setAllStr(){
+        
+        
+        
          boolean a =  false, b = false, c = false,d = false, e = false;
         
-         String ff = "";
+//         String ff = "";
         try{      
                   String query = "SELECT  lokasi, nama_film, pilih_hari, jam_tayang FROM home_page";
                   rs = stm.executeQuery(query);
@@ -163,12 +185,12 @@ public class codeC implements kursi{
                          b = rs.getString("nama_film").equalsIgnoreCase( getFilm() );
                          c = rs.getString("pilih_hari").equalsIgnoreCase(   getTanggal());
                          d = rs.getString("jam_tayang").equalsIgnoreCase(      getJam());                       
-                         boolean aa= a && b && c && d;    
+                         boolean aa = a && b && c && d;    
                             if(aa == true){
                                  truA = aa;    
                             }  
                     }
-                    
+//                   stm.close();
         }catch(SQLException ex){
               System.out.println("Inter C 2, Gagal terhubung ke database PostgreSQL");
               ex.printStackTrace();
@@ -181,34 +203,64 @@ public class codeC implements kursi{
     }
     
     public boolean allTrue(){
+        if(getFilm() != null){
+          return true;
+        }
         return truA;
     }
     
-    public void setEnableKursi(JToggleButton kursi){
-         boolean a =  false, b = false, c = false,d = false, e = false;
-        
-         String ff = "";      
-          for(int i = 0; i < list.size(); i++){
-             System.out.println("Masuk Ke Enable");
-          if(kursi.getText().equalsIgnoreCase(list.get(i) ) && truA  ){
-              System.out.println("Masuk Ke Enable");
-              kursi.setEnabled(false);
-          }           
-         }      
+   public void setEnableKursi(JToggleButton kursi){
+   boolean a =  false, b = false, c = false,d = false, e = false;
+//   System.out.print(getTanggal());     
+//   System.out.print(getLokasi());     
+//   System.out.print(getFilm());     
+//   System.out.print(getJam());     
+//   System.out.println();     
+         for(int i = 0; i < list.size(); i++){
+                if(kursi.getText().equalsIgnoreCase(list.get(i) ) && truA  ){
+//                    System.out.print(kursi.getText() + " " +  list.get(i) +"\n");
+                    kursi.setEnabled(false);
+                } else{
+                     
+                }
+         }       
+   }
+   
+   public void clearArray(){
+       list.clear();
+   }
+}
+
+class getDatas{
+    public String tanggal;
+    public String lokasi;
+    public String film;
+    public String jam;
+    
+    public getDatas(String tanggal, String lokasi,String film,String jam){
+        this.tanggal = tanggal;
+        this.lokasi = lokasi;
+        this.film = film;
+        this.jam = jam;
     }
     
-   public void setEnab(JToggleButton kursi){
-   boolean a =  false, b = false, c = false,d = false, e = false;
-        
-         for(int i = 0; i < list.size(); i++){
-             System.out.println("Masuk Ke Enable");
-                if(kursi.getText().equalsIgnoreCase(list.get(i) ) && truA  ){
-                    System.out.println("Masuk Ke Enable");
-                    kursi.setEnabled(false);
-                }           
-         }       
-   
-   }    
+    public getDatas(){}
+    
+     public String getJam(){
+        return jam;
+    }
+
+    public String getTanggal(){
+        return tanggal;
+    }
+    
+    public String getFilm(){
+        return film;
+    }
+    
+    public String getLokasi(){
+        return lokasi;
+    }
 }
 
 interface kursi{

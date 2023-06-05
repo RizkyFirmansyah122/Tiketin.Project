@@ -34,6 +34,7 @@ public class transaksi extends javax.swing.JFrame {
                Class.forName("com.mysql.cj.jdbc.Driver");
                con= DriverManager.getConnection(url, user, pass);
                stm = con.createStatement();
+               
             }       catch (ClassNotFoundException | SQLException e){
                 }
         }
@@ -213,7 +214,7 @@ public class transaksi extends javax.swing.JFrame {
  */
         
         String sql = "insert into home_page (lokasi, nama_film, pilih_hari, pilih_studio, jam_tayang, pilih_bangku, total_harga, nomor_telepon) values (?, ?, ?, ?,?,?,?, ?)";
-        //System.out.println(ruangStudio.getText());
+           
         try{
                    
                     pst = con.prepareStatement(sql);

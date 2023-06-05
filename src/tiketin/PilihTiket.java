@@ -17,6 +17,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractButton;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
@@ -42,6 +44,7 @@ public class PilihTiket extends javax.swing.JFrame {
                Class.forName("com.mysql.cj.jdbc.Driver");
                con= DriverManager.getConnection(url, user, pass);
                stm = con.createStatement();
+               
             }       catch (ClassNotFoundException | SQLException e){
                 }
         }
@@ -50,10 +53,14 @@ public class PilihTiket extends javax.swing.JFrame {
      */
     public PilihTiket() {
         initComponents();
+        avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource( HomePage.urlGambar)));
+        KKN.setText(HomePage.nameFilm);
+        resetButton();
         setTanggalan();
         setSelectWarna();
         Koneksi();
     }
+    
     private boolean filmTidakBerlangsung = false;
      public void setTanggalan(){
       JToggleButton[] allJ = {jToggleButton1,jToggleButton2,jToggleButton3,jToggleButton4,jToggleButton5,jToggleButton6};   
@@ -66,6 +73,7 @@ public class PilihTiket extends javax.swing.JFrame {
 	  allJ[i].setText(hari);
       }
     }
+     
      
      private boolean boleh = false;
      int tombolke = 0;
@@ -84,9 +92,6 @@ public class PilihTiket extends javax.swing.JFrame {
             long toJam = selisih.toHours();
             long toMenit = selisih.toMinutesPart();
             pilihBangku bangku = new pilihBangku();
-//            System.out.println(toJam);
-//            System.out.println(toMenit);
-//            System.out.println(jam.getText());
 
             if(toJam <= 0 && toMenit <= 0 || !jToggleButton1.isSelected()){
                   boleh = true;
@@ -94,7 +99,7 @@ public class PilihTiket extends javax.swing.JFrame {
                  JOptionPane.showMessageDialog(null, "Maaf Film Sedang Berlangsung :(", "Film berlangsung mulai", JOptionPane.YES_OPTION);
                   boleh = false;  
             }
-//            waktu = jam.getText();           
+        
     } 
     
     public void setSelectWarna(){
@@ -107,11 +112,11 @@ public class PilihTiket extends javax.swing.JFrame {
         for(int i = 0; i < allJ.length; i++){
           if(allJ[i].isSelected()){
             allJ[i].setBackground(Color.green);
-            if(i < 6){
-               tanggal = allJ[i].getText();
-            }else{
-               waktu = jam.getText();
-            }
+                if(i < 6){
+                   tanggal = allJ[i].getText();
+                }else{
+                   waktu = jam.getText();
+                }
           }else{
             allJ[i].setBackground(Color.white);
           }
@@ -128,10 +133,21 @@ public class PilihTiket extends javax.swing.JFrame {
                 break;
             }
         }
-        System.out.println(tombolke);
-        System.out.println(cekTopup);
+//        System.out.println(tombolke);
+//        System.out.println(cekTopup);
         
     }
+     
+     public void resetButton(){
+       JToggleButton[] allJ = {jToggleButton1,jToggleButton2,jToggleButton3,jToggleButton4,jToggleButton5,jToggleButton6
+         ,jam,jam2,jam4,jam5,jam6,jam7,jam8,jam9,jam10,jam11
+        }; 
+        boleh = false;
+        for(int i = 0; i < allJ.length; i++){
+          allJ[i].setBackground(Color.white);
+        }
+       
+     }
     
     public void setResetAutoDate(){
         
@@ -181,7 +197,8 @@ public class PilihTiket extends javax.swing.JFrame {
         gambar_1.setBackground(new java.awt.Color(0, 153, 153));
         gambar_1.setPreferredSize(new java.awt.Dimension(400, 645));
 
-        avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg"))); // NOI18N
+        //HomePage hom = new HomePage();
+        avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/kkn.jpg")));
 
         KKN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         KKN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -557,7 +574,15 @@ public class PilihTiket extends javax.swing.JFrame {
                 }else{
                     pilih.ruangStudio.setText(namaBioskop2.getText());
                 }
+                
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(pilihBangku.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
                 pilih.setVisible(true);
+                this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

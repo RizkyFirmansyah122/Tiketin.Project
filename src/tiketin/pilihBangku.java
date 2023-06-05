@@ -15,6 +15,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractButton;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
@@ -34,7 +36,7 @@ public class pilihBangku extends javax.swing.JFrame {
     private String Tekskursi = "";
     private int i = 0;
     private codeC param = new codeC();
-     
+    
     public Connection con; 
     public Statement stm;
     public PreparedStatement pst;
@@ -48,6 +50,7 @@ public class pilihBangku extends javax.swing.JFrame {
                Class.forName("com.mysql.cj.jdbc.Driver");
                con= DriverManager.getConnection(url, user, pass);
                stm = con.createStatement();
+               con.close();
             }       catch (ClassNotFoundException | SQLException e){
                 
             }
@@ -58,15 +61,20 @@ public class pilihBangku extends javax.swing.JFrame {
         initComponents();
         Koneksi();
         setBookKursi();
-//        setReset();
+        setReset();
     }
     
     private String str1,str2,str3,str4;
     public void setReset(){
-        str1 = "";
-        str2 = "";
-        str3 = "";
-        str4 = "";
+        JToggleButton[]chair = {A1,A2,A3,A4,A5,A6,A7,A8,B1,B2,B3,B4,B5,B6,B7,B8,C1,C2,C3,C4,C5,C6,C7,C8,D1,D2,D3,D4,D5,D6,D7,D8};
+        
+        for(JToggleButton kursi : chair){
+           kursi.setVisible(true);     
+        }
+//        str1 = "";
+//        str2 = "";
+//        str3 = "";
+//        str4 = "";   
     }
     
  /**
@@ -74,10 +82,10 @@ public class pilihBangku extends javax.swing.JFrame {
      */
     
     public void setBookKursi(){
-                JToggleButton[]chair = {A1,A2,A3,A4,A5,A6,A7,A8,B1,B2,B3,B4,B5,B6,B7,B8,C1,C2,C3,C4,C5,C6,C7,C8,D1,D2,D3,D4,D5,D6,D7,D8};
+        JToggleButton[]chair = {A1,A2,A3,A4,A5,A6,A7,A8,B1,B2,B3,B4,B5,B6,B7,B8,C1,C2,C3,C4,C5,C6,C7,C8,D1,D2,D3,D4,D5,D6,D7,D8};
                 
-                 String nilaiTanggal ="";
-         List<AbstractButton> listToogleButton = Collections.list(PilihTiket.pilihHari1.getElements());
+        String nilaiTanggal ="";
+        List<AbstractButton> listToogleButton = Collections.list(PilihTiket.pilihHari1.getElements());
         for (AbstractButton button : listToogleButton) {
             if(button.isSelected()){
                 nilaiTanggal = button.getText();                
@@ -92,33 +100,26 @@ public class pilihBangku extends javax.swing.JFrame {
             }
         }
         
-        str1 = ""+HomePage.lokasi1.getSelectedItem();
+        str1 = ""+ HomePage.lokasi1.getSelectedItem();
         str2 = jamTayang;
         str3 = nilaiTanggal;
-        str4 = PilihTiket.KKN.getText();
+        str4 = HomePage.nameFilm;
 
         
         param.setLokasi(str1);
         param.setJam(str2);
         param.setTanggal(str3);
         param.setFilm(str4);   
-         
-             for(JToggleButton kursi : chair){
-                 param.Koneksi();
-                 param.setAllStr();
-                 param.dataKursi();
-               param.setEnab(kursi);
-                 //param.setALLConec();
-               //  param.setGaje(kursi);
-             }  
-              System.out.println(param.allTrue() + " WOi");
-    }
-    
-    
-    
-    
         
-    
+        param.Koneksi();
+             for(JToggleButton kursi : chair){
+//                 param.Koneksi();
+                 param.setAllStr();
+//                 param.dataKursi();
+                 param.setEnableKursi(kursi);
+//                 param.setCloseReset();
+             }
+    }
     
         
     public void setKursiTersedia(java.awt.event.ActionEvent evt){
@@ -127,7 +128,7 @@ public class pilihBangku extends javax.swing.JFrame {
       String nomorKursi = kursi.getText();
       if(kursi.getBackground() == Color.green){
         kursi.setBackground(Color.white);
-        dataKursi.removeIf(s ->  (s.equals(nomorKursi))   );
+        dataKursi.removeIf(s ->  (s.equals(nomorKursi) )  );
       }else{
         keluaranKursi.setVisible(true);
         kursi.setBackground(Color.green);
@@ -722,9 +723,15 @@ public class pilihBangku extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        // TODO add your handling code here:
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(pilihBangku.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+//        param.clearArray();
         PilihTiket pilihTiket = new PilihTiket();
-        pilihTiket.setVisible(false);
+        pilihTiket.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jLabel1MouseClicked
 
@@ -959,6 +966,6 @@ public class pilihBangku extends javax.swing.JFrame {
     public static javax.swing.JLabel ruangStudio;
     public static javax.swing.JLabel totalHarga;
     // End of variables declaration//GEN-END:variables
-
-    
 }
+
+

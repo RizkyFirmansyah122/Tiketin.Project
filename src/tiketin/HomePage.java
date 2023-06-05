@@ -27,7 +27,8 @@ public class HomePage extends javax.swing.JFrame {
     private codeC param;
     public String lokasi;
     public String namaFilm;
-    
+    public static String urlGambar = "/tiketin/kkn.jpg";
+    public static String nameFilm = "";
 /**
  *
  * @author 62813
@@ -44,10 +45,20 @@ public class HomePage extends javax.swing.JFrame {
                con= DriverManager.getConnection(url, user, pass);
                stm = con.createStatement();
                System.out.println("Berhasil Konek Home");
+               
             } catch (ClassNotFoundException | SQLException e){
                 
             }
         }
+     
+     public void setResetClose(){
+            try {
+              con.close();
+              stm.close();
+            } catch (SQLException exs){
+                
+            }
+     }
 
     /**
      * Creates new form HomePage
@@ -243,10 +254,13 @@ public class HomePage extends javax.swing.JFrame {
    if(lokasi1.getSelectedIndex()==0){
             JOptionPane.showMessageDialog(null, "anda belum memilih lokasi", "Error", JOptionPane.ERROR_MESSAGE);
         }else{
+               urlGambar = "/tiketin/aveg.jpeg";
+               nameFilm = "Avengers: Endgame";
                 PilihTiket pilih = new PilihTiket();
                PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
                PilihTiket.KKN.setText("Avengers: Endgame");
                PilihTiket.rincianFilm.setText("2019 ‧ Laga/Fiksi ilmiah ‧ 3 j 1 m");
+//               setResetClose();  //Reset Close Koneksi
                if(lokasi1.getSelectedIndex()==1){
                       PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/aveg.jpeg")));
                    PilihTiket.namaBioskop1.setText("Kelapa Gading");
@@ -287,7 +301,9 @@ public class HomePage extends javax.swing.JFrame {
         if(lokasi1.getSelectedIndex()==0){
             JOptionPane.showMessageDialog(null, "anda belum memilih lokasi", "Error", JOptionPane.ERROR_MESSAGE);
         }else{
-                    PilihTiket pilih = new PilihTiket();
+                 urlGambar = "/tiketin/kkn.jpg";
+                 nameFilm = "KKN di Desa Penari";
+                   PilihTiket pilih = new PilihTiket();
                    PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/kkn.jpg")));
                    PilihTiket.KKN.setText("KKN di Desa Penari");
                     PilihTiket.rincianFilm.setText("2022  Horror  2 j 1 m");
@@ -332,6 +348,8 @@ public class HomePage extends javax.swing.JFrame {
  if(lokasi1.getSelectedIndex()==0){
             JOptionPane.showMessageDialog(null, "anda belum memilih lokasi", "Error", JOptionPane.ERROR_MESSAGE);
         }else{
+               urlGambar = "/tiketin/suzume.jpg";
+               nameFilm = "Suzume";
                 PilihTiket pilih = new PilihTiket();
                   PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/suzume.jpg")));
                    PilihTiket.KKN.setText("Suzume");
@@ -373,9 +391,13 @@ public class HomePage extends javax.swing.JFrame {
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
         // TODO add your handling code here:
          //method untuk menentukan pilihan tiket sesuai gambar daan lokasi
+            
             if(lokasi1.getSelectedIndex()==0){
             JOptionPane.showMessageDialog(null, "anda belum memilih lokasi", "Error", JOptionPane.ERROR_MESSAGE);
-                        PilihTiket pilih = new PilihTiket();
+        }else{
+               urlGambar = "/tiketin/evil.jpg";
+               nameFilm = "Evil Dead Rise";
+                PilihTiket pilih = new PilihTiket();
                         PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/evil.jpg")));
                         PilihTiket.KKN.setText("Evil Dead Rise");
                             PilihTiket.rincianFilm.setText("2023 ‧ Horor/Fantasi ‧ 1 j 36 m");
@@ -410,7 +432,7 @@ public class HomePage extends javax.swing.JFrame {
                               pilih.setVisible(true);
                               this.setVisible(false);
                          } 
-            }
+          }
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
@@ -419,9 +441,11 @@ public class HomePage extends javax.swing.JFrame {
 if(lokasi1.getSelectedIndex()==0){
             JOptionPane.showMessageDialog(null, "anda belum memilih lokasi", "Error", JOptionPane.ERROR_MESSAGE);
         }else{
+               urlGambar = "/tiketin/pope.jpg";
+               nameFilm = "The Popes Exorcist";
                 PilihTiket pilih = new PilihTiket();
                  PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/pope.jpg")));
-                  PilihTiket.KKN.setText("The Pope's Exorcist");
+                  PilihTiket.KKN.setText("The Popes Exorcist");
                      PilihTiket.rincianFilm.setText("2023 ‧ Horor ‧ 1 j 43 m");
                    if(lokasi1.getSelectedIndex()==1){
                         PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/pope.jpg")));
@@ -463,6 +487,8 @@ if(lokasi1.getSelectedIndex()==0){
         if(lokasi1.getSelectedIndex()==0){
             JOptionPane.showMessageDialog(null, "anda belum memilih lokasi", "Error", JOptionPane.ERROR_MESSAGE);
         }else{
+               urlGambar = "/tiketin/SIlentvoice (1).jpg";
+               nameFilm = "A Silent Voice";
                 PilihTiket pilih = new PilihTiket();
                  PilihTiket.avangers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tiketin/SIlentvoice (1).jpg")));
                   PilihTiket.KKN.setText("A Silent Voice");

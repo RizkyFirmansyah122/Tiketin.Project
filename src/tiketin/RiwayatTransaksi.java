@@ -35,6 +35,7 @@ public class RiwayatTransaksi extends javax.swing.JFrame {
                Class.forName("com.mysql.cj.jdbc.Driver");
                con= DriverManager.getConnection(url, user, pass);
                stm = con.createStatement();
+               
             }       catch (ClassNotFoundException | SQLException e){
                         //JOptionPane.showMessageDialog(this, e);
 
